@@ -1,7 +1,17 @@
 # Architectural Katas Q4 2025: AI-Enabled Architecture - BRINUS
 
+## Members
 
+- Rafael
+- Prashant
+- Khaled
+- João Vinagre<joao.lima@zeecode.io>
 
+## Communication
+
+- [Discord Channel](https://discord.gg/kzD26QWS)
+  - Server - 1427674179335094415
+- Google Groups - Q4Qatas2025-BRINUS
 
 ## Resources
 
