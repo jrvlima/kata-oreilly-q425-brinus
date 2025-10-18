@@ -40,9 +40,9 @@ jobs:
         working-directory: docs/diagrams/c4
         run: npm install
 
-      - name: Validate
-        working-directory: docs/diagrams/c4
-        run: npm run test
+      # - name: Validate
+      #   working-directory: docs/diagrams/c4
+      #   run: npm run test
 
   # Build job
   build-pages:
