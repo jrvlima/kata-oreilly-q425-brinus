@@ -8,7 +8,7 @@
 
 ### Q2 \- Legal/legality compliance?
 
-**Sam:** Yes/No\! O insurance issues, admit everything is ok. For aspects such as: (i) ïf someone steal the vehicle, how do we know(?); (ii) what happens when an e-bike doesn’t get checked out back (?) (iii) if someone is piggybacking for a ride (?). There is a relation between what is legal and/or what is situated into a gray-area. You don’t have to rebuild this system for real, so getting every single bit of detail out of it isn't necessarily required, given you’ve probably only got a few weeks to work on this problem (legality). The only kind of area where sort of legality of enforcement you need to deal with is: (i) people not returning vehicles to the right location; (ii) people stealing things. It is a system to replace an existing system; just assume it’s a complete greenfield rebuild\!
+**Sam:** Yes/No\! O insurance issues, admit everything is ok. For aspects such as: (i) if someone steals the vehicle, how do we know(?); (ii) what happens when an e-bike doesn’t get checked out back (?) (iii) if someone is piggybacking for a ride (?). There is a relation between what is legal and/or what is situated into a gray-area. You don’t have to rebuild this system for real, so getting every single bit of detail out of it isn't necessarily required, given you’ve probably only got a few weeks to work on this problem (legality). The only kind of area where sort of legality of enforcement you need to deal with is: (i) people not returning vehicles to the right location; (ii) people stealing things. It is a system to replace an existing system; just assume it’s a complete greenfield rebuild\!
 
 ### Q3 \- GEO restrictions? City boundaries etc.
 
@@ -68,5 +68,5 @@
 
 ### Q17 \- What is the GUI interface into the vehicles?
 
-**Sam:** I’m gonna let you define what the interface should be\! Another interface integrations with HQQ/Telemetric apps etc is also part of the solution to the architecture design.
+**Sam:** I’m gonna let you define what the interface should be\! Another interface integration with HQQ/Telemetric apps etc is also part of the solution to the architecture design.
 
