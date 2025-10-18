@@ -5,7 +5,7 @@
 - Rafael
 - Prashant
 - Khaled
-- João Vinagre<joao.lima@zeecode.io>
+- João Vinagre <joao.lima@zeecode.io>
 
 ## Communication
 
