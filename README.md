@@ -13,6 +13,25 @@
   - Server - 1427674179335094415
 - Google Groups - Q4Qatas2025-BRINUS
 
+## Folder Structure
+
+```plaintext
+/docs
+  01_preamble/
+  02_arch_design/
+  03_data_modeling/
+  04_validation/
+  05_appendices/
+  fleeting/
+  originals/
+  assets/
+  README.md
+  diagrams/
+    c4/
+    uml/
+  adrs/
+```
+
 ## Resources
 
 - [architecture-decision-record examples and templates](https://github.com/joelparkerhenderson/architecture-decision-record?tab=readme-ov-file)
@@ -31,3 +50,7 @@
 - Take [Generative AI in Production](https://learning.oreilly.com/live-events/generative-ai-in-production/0636920098590/) (live course with Skanda Vivek)
 - Take [Microservices Bootcamp](https://learning.oreilly.com/live-events/microservices-bootcamp/0642572005573/) (live course with Sam Newman)
 - Take [Software Architecture by Example](https://learning.oreilly.com/live-events/software-architecture-by-example/0636920261797/) (live course with Neal Ford and Mark Richards)
+
+### Architecture Design Approaches
+
+![Architecture Design Approaches](assets/Architecture%20Design%20Approaches-2025-10-18-183716.png)
