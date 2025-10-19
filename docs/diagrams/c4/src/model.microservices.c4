@@ -1,0 +1,197 @@
+model {
+    extend mobiltiy_corp {
+        microservices = group 'Microservices' {
+
+            style {
+                color green
+                opacity 20%
+                border dashed
+            }
+
+            description """
+            Microservices
+
+            The microservices group contains all the individual services that make up the MobilityCorp system. Each service is responsible for a specific business capability, allowing for modular development and deployment.
+
+            """
+
+            booking_service = service 'Booking Service' {
+                description """
+                    Booking Service
+
+                    The booking service is responsible for managing customer bookings of vehicles. It handles availability, reservations, and payment processing.
+
+                """
+
+                booking_service_database = database 'Booking Service Database' {
+                    description """
+                    Booking Service Database
+
+                    The booking service database stores all data related to customer bookings, including reservation details, payment information, and vehicle availability.
+
+                    """
+
+                }
+            }
+
+            customer_management_service = service 'Customer Management Service' {
+                description """
+                # Customer Service
+
+                The customer service manages customer profiles, preferences, and authentication.
+
+                """
+
+                customer_management_service_database = database 'Customer Management Service Database' {
+                    description """
+                    # Customer Service Database
+
+                    The customer service database stores all data related to customers, including profile information, preferences, and authentication credentials.
+
+                    """
+
+                }
+            }
+
+
+            return_service = service 'Return Service' {
+                description """
+                # Return Service
+
+                The return service manages the return process of rented vehicles, including location tracking, condition assessment, and billing for any damages or late returns.
+
+                > Cars, Vans, scooters and bikes have to be returned to designated parking spots at the end of their rental
+                > We need proof of their return - customers need to submit photos of the returned vehicle Cars and Vans need to be plugged in to the EV charger at their designated parking spot when returned We ask the customer to provide feedback - this could include information about things like vehicle faults
+
+                """
+
+                return_service_database = database 'Return Service Database' {
+                    description """
+                    
+                    The return service database stores all data related to vehicle returns, including return locations, condition reports, and customer feedback.
+
+                    """
+
+                }
+
+            }
+
+            payment_service = service 'Payment Service' {
+                description """
+                # Payment Service
+
+                The payment service processes all financial transactions, including customer payments, refunds, and invoicing.
+
+                """
+
+                payment_service_database = database 'Payment Service Database' {
+                    description """
+                    # Payment Service Database
+
+                    The payment service database stores all data related to financial transactions, including payment records, refund details, and invoicing information.
+
+                    """
+
+                }
+            }
+
+            bay_management_service = service 'Bay Management Service' {
+                description """
+                Bay Management Service
+
+                The bay management service oversees the allocation and monitoring of vehicle bays, ensuring optimal distribution and availability of vehicles across locations.
+
+                """
+
+                bay_management_service_database = database 'Bay Management Service Database' {
+                    description """
+                    # Bay Management Service Database
+
+                    The bay management service database stores all data related to vehicle bays, including location information, vehicle assignments, and usage statistics.
+
+                    """
+
+                }
+            }
+
+            bike_scooter_charging_distribution_service = service 'Bike/Scooter Charging & Distribution Service' {
+                description """
+                # Bike/Scooter Charging & Distribution Service
+
+                This service manages the logistics of charging and distributing electric bikes and scooters to ensure they are available for customers.
+
+                """
+
+                bike_scooter_charging_distribution_service_database = database 'Bike/Scooter Charging & Distribution Service Database' {
+                    description """
+                    # Bike/Scooter Charging & Distribution Service Database
+
+                    The bike/scooter charging & distribution service database stores all data related to the charging status and distribution logistics of bikes and scooters.
+
+                    """
+
+                }
+            }
+
+            veihcles_fleet_management_service = service 'Vehicles Fleet Management Service' {
+                description """
+                # Vehicles Fleet Management Service
+
+                The vehicles fleet management service is responsible for tracking and maintaining the fleet of vehicles, including scheduling maintenance and repairs.
+
+                """
+
+                veihcles_fleet_management_service_database = database 'Vehicles Fleet Management Service Database' {
+                    description """
+                    # Vehicles Fleet Management Service Database
+
+                    The vehicles fleet management service database stores all data related to the fleet of vehicles, including maintenance records, usage statistics, and vehicle status.
+
+                    """
+                }
+            }
+
+            veihcles_tracking_service = service 'Vehicles Tracking Service' {
+                description """
+                # Vehicles Tracking Service
+
+                The vehicles tracking service provides real-time location tracking of all vehicles in the fleet, enabling efficient management and customer support.
+
+                """
+
+                veihcles_tracking_service_database = database 'Vehicles Tracking Service Database' {
+                    description """
+                    # Vehicles Tracking Service Database
+
+                    The vehicles tracking service database stores all location data for the fleet of vehicles, allowing for real-time tracking and historical analysis.
+
+                    """
+
+                }
+            }
+
+            telemetry_service = service 'Telemetry Service' {
+                description """
+                # Telemetry Service
+
+                The telemetry service collects and analyzes data from vehicles to monitor performance, usage patterns, and detect potential issues.
+
+                """
+
+                telemetry_service_database = database 'Telemetry Service Database' {
+                    description """
+                    # Telemetry Service Database
+
+                    The telemetry service database stores all telemetry data collected from vehicles, including performance metrics and usage statistics.
+
+                    """
+                }
+            }
+
+            -> otel 'Emits metrics/traces'
+            -> platform.message_broker.topic_domain_events 'Publishes domain events'
+            platform.message_broker.topic_domain_events -> microservices 'Consumes (react to events)'
+        }
+
+    }
+}

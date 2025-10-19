@@ -54,3 +54,43 @@
 ### Architecture Design Approaches
 
 ![Architecture Design Approaches](assets/Architecture%20Design%20Approaches-2025-10-18-183716.png)
+
+
+## Functional requirements (FR)
+
+FR1: Ingest telemetry & domain events (bookings, returns, payments) in real time.
+FR2: Fan-out the same event to many consumers (ops, read models, alerts, AI).
+FR3: Replay past events for rebuilds/backfills/ML training.
+FR4: Support stream processing (joins, windows, enrichment) for inventory/alerts.
+
+Non-functional (NFR / FURPS+ highlights)
+
+Reliability: no data loss, recover on failure, exactly-once where needed.
+Performance: absorb bursts (commute spikes), low end-to-end freshness (≤2–5s).
+Scalability: horizontal scale for producers/consumers independently.
+Supportability: observability (lag/backpressure), schema governance.
+Portability/Compliance: EU data residency, vendor-neutral formats.
+
+
+### Design mechanisms that satisfy them
+
+| Requirement      | Architectural Mechanism (Design)                                        | Why it satisfies                                     |
+| ---------------- | ----------------------------------------------------------------------- | ---------------------------------------------------- |
+| FR1, Perf        | **Partitioned, durable log** (topics with partitions, replication)      | High throughput ingest; write once, read many        |
+| FR2              | **Consumer groups** (multi readers, independent offsets)                | Safe fan-out; each team reads at its pace            |
+| FR3, Reliability | **Replay by offset** + **long retention** + **lake archive**            | Deterministic rebuilds; ML/data science              |
+| FR4              | **Stateful stream processing** (event-time, watermarks, windows, joins) | Real-time inventory & alerts, correct with late data |
+| R, S             | **Checkpoints/transactions** + **idempotent upserts**                   | Exactly-once sinks to Postgres/ClickHouse            |
+| U, S             | **Schema Registry + CloudEvents**                                       | Safe evolution; self-documenting contracts           |
+| S                | **Observability: lag/backpressure/throughput**                          | Operability and fast incident response               |
+
+
+### Implementations (pick per mechanism)
+
+| Mechanism           | Primary choice                                        | Alternatives                                                      | Notes / Trade-offs                                                                                                             |
+| ------------------- | ----------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Durable event spine | **Apache Kafka**                                      | RabbitMQ (queues), AWS EventBridge, GCP Pub/Sub, Azure Event Grid | Kafka = log + replay + partitions. RabbitMQ great for commands but weak on replay. Cloud brokers reduce ops, increase lock-in. |
+| Stream processing   | **Apache Flink**                                      | ksqlDB (SQL), Kafka Streams (lib)                                 | Flink for complex/stateful/exactly-once sinks; ksqlDB for quick SQL pipelines.                                                 |
+| Schema governance   | **Apicurio/Confluent Schema Registry**                | EventBridge/PubSub schemas                                        | Enforce compat rules; Avro/Proto/JSON; CloudEvents wrapper.                                                                    |
+| Observability       | **OTel + Prometheus/Grafana + Kafka/Flink exporters** | Datadog/NewRelic                                                  | Lag/backpressure dashboards + alerts; traces across API↔Kafka↔consumers.                                                       |
+| Long-term archive   | **S3/MinIO (Bronze)**                                 | GCS/Azure Blob                                                    | Cheap retention; replay via connectors.                                                                                        |

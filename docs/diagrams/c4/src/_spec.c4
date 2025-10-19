@@ -1,72 +1,220 @@
 specification {
 
+  // ============================================
+  // Custom Color Palette - Professional & Accessible
+  // ============================================
+  // Based on modern design systems with WCAG AA compliance
+
+  // Core System Colors
+  color mobilitycorp-blue #3B82F6        // Primary system components
+  color mobilitycorp-sky #0EA5E9          // Containers & gateways
+  color mobilitycorp-indigo #6366F1       // Infrastructure components
+
+  // AI & Analytics
+  color mobilitycorp-purple #A855F7       // AI/ML systems
+  color mobilitycorp-violet #8B5CF6       // Analytics components
+
+  // Data & Messaging
+  color mobilitycorp-amber #F59E0B        // Message brokers, events
+  color mobilitycorp-slate #64748B        // Databases, data storage
+  color mobilitycorp-yellow #EAB308       // Gold layer data
+
+  // Users & External
+  color mobilitycorp-green #10B981        // Actors, users, success states
+  color mobilitycorp-orange #F97316       // IoT devices, edge systems
+  color mobilitycorp-gray #6B7280         // External systems
+  color mobilitycorp-muted #9CA3AF        // Deprecated, low priority
+
+  // Relationship Colors
+  color mobilitycorp-event-flow #FBBF24   // Event/async communication
+  color mobilitycorp-data-flow #94A3B8    // Data pipelines
+  color mobilitycorp-sync-flow #60A5FA    // Synchronous API calls
+
+  // ============================================
+  // ACTORS & EXTERNAL ENTITIES
+  // ============================================
+
   element actor {
     style {
       shape person
-      color green
+      color mobilitycorp-green
+      border solid
+      opacity 100%
     }
   }
 
-  element system {
-    notation "Software System"
+  element iot {
+    notation "IoT Device"
     style {
-      opacity 20%
+      shape rectangle
+      color mobilitycorp-orange
+      border dashed
+      opacity 85%
     }
   }
 
   element external-system {
     notation "External Software System"
     style {
-      opacity 20%
-      color muted
+      shape rectangle
+      color mobilitycorp-gray
+      border dashed
+      opacity 60%
     }
   }
 
-  element application
+  // ============================================
+  // SYSTEM & CONTAINER ELEMENTS
+  // ============================================
+
+  element system {
+    notation "Software System"
+    style {
+      shape rectangle
+      color mobilitycorp-blue
+      opacity 25%
+      border solid
+    }
+  }
+
+  element group {
+    notation "Container Group"
+    style {
+      shape rectangle
+      color mobilitycorp-indigo
+      opacity 15%
+      border solid
+    }
+  }
+
+  element container {
+    notation "Container"
+    style {
+      shape rectangle
+      color mobilitycorp-sky
+      opacity 90%
+      border solid
+    }
+  }
 
   element component {
+    notation "Component"
     style {
-      opacity 20%
+      shape rectangle
+      color mobilitycorp-indigo
+      opacity 75%
+      border solid
     }
   }
+
+  // ============================================
+  // MICROSERVICES
+  // ============================================
+
   element service {
-    link https://github.com/likec4/template 'Repository'
+    notation "Microservice"
+    style {
+      shape rectangle
+      color mobilitycorp-blue
+      opacity 90%
+      border solid
+    }
+  }
+
+  // ============================================
+  // APPLICATIONS
+  // ============================================
+
+  element application {
+    notation "Application"
+    style {
+      shape rectangle
+      color mobilitycorp-sky
+      opacity 85%
+    }
   }
 
   element webapp {
-    #teamA
     notation "Web Application"
     style {
       shape browser
+      color slate
+      opacity 90%
+      border solid
     }
   }
+
   element mobile {
-    #teamA
     notation "Mobile Application"
     style {
       shape mobile
+      color gray
+      opacity 90%
+      border solid
     }
   }
+
+  // ============================================
+  // DATA & STORAGE
+  // ============================================
+
   element database {
     notation "Database"
-    technology "PostgreSQL"
     style {
       shape storage
+      color mobilitycorp-slate
+      opacity 85%
+      border solid
       icon tech:postgresql
-      opacity 30%
     }
   }
+
   element db-table {
     notation "Database Table"
     style {
       shape storage
+      color mobilitycorp-slate
+      opacity 70%
+      border solid
       icon tech:postgresql
     }
   }
 
-  tag deprecated {
-    color rgb(100 100 100)
+  // ============================================
+  // MESSAGING & EVENTS
+  // ============================================
+
+  element queue {
+    notation "Message Queue"
+    style {
+      shape queue
+      color mobilitycorp-amber
+      opacity 10%
+      border solid
+    }
   }
+
+  element event_broker {
+    notation "Event Broker"
+    style {
+      shape cylinder
+      color mobilitycorp-amber
+      opacity 85%
+      border solid
+    }
+  }
+
+  // ============================================
+  // TAGS (markers only - styling applied in model.c4)
+  // ============================================
+
+  tag platform-backbone
+  tag ai-analytics
+  tag gateway
+  tag deprecated
+  tag bronze-layer
+  tag silver-layer
+  tag gold-layer
   tag next
   tag v1
   tag v1_1
@@ -74,11 +222,37 @@ specification {
   tag teamA
   tag teamB
 
-  relationship solid {
+  // ============================================
+  // RELATIONSHIPS
+  // ============================================
+
+  relationship async {
+    line dashed
+    color mobilitycorp-event-flow
+  }
+
+  relationship sync {
     line solid
+    color mobilitycorp-sync-flow
+  }
+
+  relationship data-flow {
+    line solid
+    color mobilitycorp-data-flow
+  }
+
+  relationship event-flow {
+    line dashed
+    color mobilitycorp-event-flow
   }
 
   relationship many-to-many {
     line dotted
+    color mobilitycorp-muted
+  }
+
+  relationship solid {
+    line solid
+    color mobilitycorp-blue
   }
 }

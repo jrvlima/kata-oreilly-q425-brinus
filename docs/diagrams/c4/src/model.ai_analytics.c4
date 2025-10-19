@@ -1,0 +1,63 @@
+model {
+    extend mobiltiy_corp {
+        
+        ai_analytics = group 'AI & Analytics' {
+
+            style {
+                color amber
+                opacity 20%
+                border dashed
+            }
+        
+            description """
+            
+            RAG and semantic search built from Gold-layer summaries & facts. Reused by Ops, Support, Planning.
+            
+            """
+            
+            vector_db = database 'Vector DB' {
+                description """
+
+                Vector DB - Semantic search and embeddings storage for AI-powered knowledge retrieval
+
+                """
+
+                link ../fleeting_ai/vector-db.md 'Full Documentation'
+
+                technology 'Qdrant'
+            }
+            
+            rag_api = container 'RAG API' {
+                description """
+
+                RAG API - Retrieval-Augmented Generation for grounded AI assistance with citations
+
+                """
+
+                link ../fleeting_ai/rag-api.md 'Full Documentation'
+
+                technology 'FastAPI + LlamaIndex/LangChain + LiteLLM/Bedrock'
+
+                -> vector_db 'Queries embeddings'
+                -> gold_marts 'Queries facts'
+                -> read_model_db 'Reads current state'
+            }
+
+            // DAG that prepares embeddings from Gold
+            embed_pipeline = container 'Embedding Pipeline' {
+                description """
+
+                Embedding Pipeline - Transform Gold data into semantic vectors for RAG retrieval
+
+                """
+
+                link ../fleeting_ai/embedding-pipeline.md 'Full Documentation'
+
+                technology 'Airflow task / Streaming job'
+
+                -> vector_db 'Upserts'
+            }
+        
+        }
+    }
+}

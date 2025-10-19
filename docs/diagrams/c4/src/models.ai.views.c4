@@ -1,0 +1,58 @@
+views {
+    view ai_analytics of mobiltiy_corp.ai_analytics {
+        title 'AI Analytics / View'
+        description """    
+        # MobilityCorp AI Analytics Services - Container View
+
+        This diagram provides a detailed view of the AI Analytics Services within the MobilityCorp system, highlighting its components and interactions.
+
+        """
+
+        include ai_analytics
+        include ai_analytics.*
+
+    }
+
+    view vector_db of mobiltiy_corp.ai_analytics.vector_db {
+        title 'AI Analytics / Vector DB'
+        description """    
+        # MobilityCorp AI Analytics - Vector DB Container View
+
+        This diagram provides a detailed view of the Vector DB component within the MobilityCorp AI Analytics Services, highlighting its internal structure and interactions.
+
+        """
+
+        include vector_db
+        include vector_db.*
+
+    }
+
+    view rag_api of mobiltiy_corp.ai_analytics.rag_api {
+        title 'AI Analytics / RAG API'
+        description """    
+        # MobilityCorp AI Analytics - RAG API Container View
+
+        This diagram provides a detailed view of the RAG API component within the MobilityCorp AI Analytics Services, highlighting its internal structure and interactions.
+
+        """
+
+        include rag_api
+        include rag_api.*
+
+    }
+
+    view embed_pipeline of mobiltiy_corp.ai_analytics.embed_pipeline {
+        title 'AI Analytics / Embedding Pipeline'
+        description """    
+        # MobilityCorp AI Analytics - Embedding Pipeline Container View
+
+        This diagram provides a detailed view of the Embedding Pipeline component within the MobilityCorp AI Analytics Services, highlighting its internal structure and interactions.
+
+        """
+
+        include embed_pipeline
+        include embed_pipeline.*
+
+    }
+}
+

@@ -1,19 +1,61 @@
 specification {
+
+  // ============================================
+  // Custom Deployment Colors
+  // ============================================
+
+  color deployment-internet #E0F2FE      // Light sky blue for internet
+  color deployment-region #F1F5F9        // Light gray for cloud regions
+  color deployment-cluster #DBEAFE       // Light blue for K8s clusters
+  color deployment-vm #E0E7FF            // Light indigo for VMs
+  color deployment-environment #EFF6FF   // Very light blue for environments
+
+  // ============================================
+  // DEPLOYMENT NODES
+  // ============================================
+
   deploymentNode internet {
     title 'Internet'
+    style {
+      color deployment-internet
+      opacity 40%
+      border dashed
+    }
   }
 
   deploymentNode environment {
     notation 'Deployment Environment'
     style {
-      opacity 0%
+      color deployment-environment
+      opacity 20%
+      border solid
     }
   }
 
   deploymentNode vm {
     notation 'Virtual Machine'
     style {
-      opacity 5%
+      color deployment-vm
+      opacity 30%
+      border solid
+    }
+  }
+
+  deploymentNode cluster {
+    notation 'Kubernetes Cluster'
+    style {
+      color deployment-cluster
+      opacity 25%
+      border solid
+    }
+  }
+
+  deploymentNode region {
+    notation 'Cloud Region'
+    style {
+      color deployment-region
+      opacity 15%
+      border dashed
     }
   }
 }

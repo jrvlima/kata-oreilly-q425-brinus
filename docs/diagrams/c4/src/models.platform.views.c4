@@ -1,0 +1,61 @@
+views {
+
+    view platform of mobiltiy_corp.platform {
+        title 'Platform / View'
+        description """
+        # Platform / View
+
+        This diagram provides a detailed view of the Platform Services within the MobilityCorp system, highlighting its components and interactions.
+
+        """
+
+        include platform
+        include platform.*
+
+    }
+
+
+    view broker of mobiltiy_corp.platform.message_broker {
+        title 'Platform / Message Broker'
+        description """
+        # Platform / Message Broker
+
+        This diagram provides a detailed view of the Message Broker component within the MobilityCorp Platform Services, highlighting its internal structure and interactions.
+
+        """
+
+        include message_broker
+        include message_broker.*
+
+    }
+
+    view stream_processor of mobiltiy_corp.platform.message_broker.stream_processor {
+        title 'Platform / Stream Processor'
+        description """
+        # Platform / Stream Processor
+
+        This diagram provides a detailed view of the Stream Processor component within the MobilityCorp Platform Services, highlighting its internal structure and interactions.
+
+        """
+
+        include stream_processor
+        include stream_processor.*
+
+    }
+
+
+    view data_layers of mobiltiy_corp.platform.data_layers {
+        title 'Platform / Data Layers'
+        description """
+        # Platform / Data Layers
+
+        This diagram provides a detailed view of the Data Layers component within the MobilityCorp Platform Services, highlighting its internal structure and interactions.
+
+        """
+
+        include data_layers
+        include data_layers.*
+
+    }
+
+}

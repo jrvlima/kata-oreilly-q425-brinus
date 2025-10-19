@@ -1,0 +1,241 @@
+model {
+
+    extend mobiltiy_corp {
+        // --- Shared Platform Backbone (reusable by ALL use-cases) ---
+        platform = group 'Platform Backbone' {
+            description """
+            
+            Vendor-neutral event & data spine shared by Booking, Payment, Return, Telemetry, etc.
+            
+            """
+
+            style {
+                color indigo
+                opacity 20%
+                border dashed
+            }
+
+            message_broker = event_broker 'Broker' {
+
+                description """
+                Event Broker - High-throughput, low-latency, durable pub/sub for event streaming and integration
+                """
+
+                link ../fleeting_ai/event-broker.md 'Full Documentation'
+
+                technology 'Kafka'
+
+                
+
+                durable_logs = component 'Durable Logs' {
+                    description """
+                    
+                    Durable, partitioned, replicated logs for high-throughput event streaming.
+                    
+                    """
+
+                }
+
+                queues = container 'Queues' {
+                    description """
+                    
+                    Topic partitions exposed as queues for scalable consumption.
+                    
+                    """
+
+                    style {
+                        opacity 10%
+                        border solid
+                    }
+
+                    // Topics as first-class elements (optional but helpful for clarity)
+                    topic_raw_events = queue 'veh.events.raw' {
+                        description """
+                        
+                        # Raw normalized device events (CloudEvents).
+                        
+                        """
+
+                        -> object_store_bronze 'Archived segments/snapshots'
+                    }
+                    topic_inventory_updates = queue 'veh.inventory.updates' {
+                        description """
+                        
+                        # Derived inventory/availability events.
+                        
+                        """
+                    }
+                    topic_alerts = queue 'alerts' {
+                        description """
+                        
+                        # Alerts (low_battery, geofence, faults).
+                        
+                        """
+                    }
+                    topic_domain_events = queue 'domain.events' {
+                        description """
+                        
+                        # Business events from microservices (booking_created, payment_authorized, return_completed, etc.).
+                        
+                        """
+                    }
+                
+                }
+
+                
+                stream_processor = container 'Stream Processor' {
+                    description """
+
+                    Stream Processor - Real-time event processing with stateful transformations and enrichment
+
+                    """
+
+                    link ../fleeting_ai/stream-processor.md 'Full Documentation'
+
+                    technology 'Flink / ksqlDB / Kafka Streams'
+
+                    flink_jobs = component 'Flink/ksqlDB Jobs' {
+                      technology 'Flink / ksqlDB'
+                      description """
+                      
+                      Stateful joins, windows, enrichment.
+                      
+                      """
+
+                      -> queues.topic_inventory_updates 'Publishes'
+                      -> queues.topic_alerts 'Publishes'
+                      -> timeseries_olap_db 'Upserts facts'
+                      -> read_model_db 'Updates projections'
+                    }
+
+                    ksqldb_pipelines = component 'ksqlDB Pipelines' {
+                      technology 'ksqlDB'
+                      // keep this for simpler SQL-only flows if you like
+                    }
+
+                    queues.topic_raw_events -> flink_jobs 'Consumes'
+                    queues.topic_domain_events -> flink_jobs 'Consumes'
+                }
+
+            }
+
+            schema_registry = container 'Schema Registry' {
+
+                description """
+
+                Schema Registry - Centralized schema management for event-driven architecture
+
+                """
+
+                link ../fleeting_ai/schema-registry.md 'Full Documentation'
+
+                technology 'Apicurio/Confluent'
+
+                -> message_broker 'Enforced by'
+
+            }
+
+            // CQRS read side (reused across apps)
+            read_model_db = database 'Read Model DB' {
+                description """
+
+                Read Model DB - Optimized query database for CQRS read-side projections
+
+                """
+
+                link ../fleeting_ai/read-model-db.md 'Full Documentation'
+
+                technology 'PostgreSQL'
+            }
+
+            data_layers = group 'Data Layers' {
+                description """
+
+                Data Layers - Multi-tier data architecture for raw events, analytical facts, and curated marts
+
+                """
+
+                 // Bronze/Silver/Gold data layers
+                object_store_bronze = database 'Object Store (Bronze)' {
+                    description """
+
+                    Object Store (Bronze Layer) - Immutable raw event archive for replay, audit, and ML training
+
+                    """
+
+                    link ../fleeting_ai/object-store-bronze.md 'Full Documentation'
+
+                    technology 'S3/MinIO'
+
+                    -> platform.batch_orchestrator 'Reads'
+
+                }
+
+                timeseries_olap_db = database 'Time-series/OLAP (Silver)' {
+                    description """
+
+                    Time-series/OLAP DB (Silver Layer) - Cleaned analytical facts for dashboards and operational intelligence
+
+                    """
+
+                    link ../fleeting_ai/timeseries-olap-db.md 'Full Documentation'
+
+                    technology 'ClickHouse/TimescaleDB'
+
+                    -> platform.batch_orchestrator 'Reads'
+                }
+
+                gold_marts = database 'Data Marts (Gold)' {
+                    description """
+
+                    Curated dimensional models for AI, business intelligence, and strategic planning
+
+                    """
+
+                    link ../fleeting_ai/data-marts-gold.md 'Full Documentation'
+
+                    technology 'dbt on ClickHouse/Postgres'
+
+                    -> embed_pipeline 'Reads'
+                }
+
+            }
+
+            batch_orchestrator = container 'Batch Orchestrator' {
+                description """
+
+                Batch Orchestrator - Workflow automation for data pipelines, ML training, and scheduled analytics
+
+                """
+
+                link ../fleeting_ai/batch-orchestrator.md 'Full Documentation'
+
+                technology 'Airflow/Prefect + dbt'
+
+
+                 -> data_layers.gold_marts 'Writes'
+            }
+
+            // Observability (shared)
+            otel = container 'Observability Stack' {
+                description """
+
+                Observability Stack - Unified monitoring, logging, tracing, and alerting for distributed systems
+
+                """
+
+                link ../fleeting_ai/observability-stack.md 'Full Documentation'
+
+                technology 'OTel Collector + Prometheus + Grafana + Loki'
+
+                message_broker -> otel 'Emits metrics/traces'
+                api_gateway -> otel 'Emits metrics/traces'
+                edge_ingest_gateway -> otel 'Emits metrics/traces'
+                microservices -> otel 'Emits metrics/traces'
+
+            }
+
+        }
+    }
+
+}
