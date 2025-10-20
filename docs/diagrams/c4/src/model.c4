@@ -1,26 +1,14 @@
 model {
 
     maas = external-system 'Mobility-as-a-Service (MaaS) Platform' {
-        description """
-        
-        Mobility-as-a-Service (MaaS) Platform
-
-        The MaaS Platform is an external system that integrates various transportation services into a single accessible on-demand service for users. It provides a unified interface for customers to plan, book, and pay for multiple types of mobility options, including public transit, ride-sharing, bike rentals, and car rentals.
-
-        """
+        description "The MaaS Platform is an external system that integrates various transportation services into a single accessible on-demand service for users. It provides a unified interface for customers to plan, book, and pay for multiple types of mobility options, including public transit, ride-sharing, bike rentals, and car rentals."
 
         -> api_gateway 'Integrates with' "REST API + OAuth2"
 
     }
 
     omf = external-system 'Open Mobility Foundation (OMF)' {
-        description """
-        
-        Open Mobility Foundation (OMF)
-
-        The Open Mobility Foundation is an industry consortium that establishes open standards and protocols for mobility services. It promotes interoperability among different transportation providers, enabling seamless integration and data sharing to enhance user experience and operational efficiency.
-
-        """
+        description "The Open Mobility Foundation is an industry consortium that establishes open standards and protocols for mobility services. It promotes interoperability among different transportation providers, enabling seamless integration and data sharing to enhance user experience and operational efficiency."
 
         -> api_gateway 'Exposes data to' "REST API + OAuth2"
 
@@ -28,11 +16,7 @@ model {
 
     customer = actor 'Customer' {
         
-        description """
-        
-        Customers use MobilityCorp to rent vehicles for short-term transport
-
-        """
+        description "Customers use the MobilityCorp platform to find, book, and manage vehicle rentals for their transportation needs."
 
         -> customer_app 'Uses'
         -> web_app 'Uses'
@@ -40,11 +24,7 @@ model {
     }
 
     mobiltiy_corp_staff = actor 'MobilityCorp Staff' {
-        description """
-        
-        MobilityCorp Staff manage the operations of the MobilityCorp system, including vehicle maintenance, customer support, and system administration.
-
-        """
+        description "MobilityCorp Staff manage the operations of the MobilityCorp system, including vehicle maintenance, customer support, and system administration."
 
         -> staff_app 'Uses'
         -> web_app 'Uses'
@@ -52,9 +32,7 @@ model {
     }
 
     oncall_engineer = actor 'On-call Engineer' {
-        description """
-        On-call Engineer responsible for real-time operational response across MobilityCorp's event-driven platform
-        """
+        description "On-call Engineer responsible for real-time operational response across MobilityCorp's event-driven platform"
 
         link ../fleeting_ai/oncall-engineer.md 'Full Documentation'
 
@@ -70,33 +48,13 @@ model {
 
 
     vehicle_Bay_device = iot 'Vehicle Bay Device' {
-        description """
-        
-        Vehicle Bay Device
-
-        The Vehicle Bay Device is an IoT device installed at designated vehicle bays to monitor vehicle presence, manage access control, and facilitate the return process for rented vehicles.
-
-        """
+        description "The Vehicle Bay Device is an IoT device installed at designated vehicle bays to monitor vehicle presence, manage access control, and facilitate the return process for rented vehicles."
 
         -> edge_ingest_gateway 'Communicates with' "MQTT/CoAP + CloudEvents"
     }
 
     mobiltiy_corp = system 'MobilityCorp' {
-        description """
-        
-        MobilityCorp provide short-term rental for last-mile transport!
-
-        - Electric scooters
-        - eBikes
-        - Electric cars and vans
-        
-        Our customers sign up and can rent available vehicles
-
-        MobilityCorp operates in multiple locations, mostly in city locations but is increasingly offering its car and van rental to more suburban locations
-
-        We want you to come up with a new architecture for MobilityCorp, incorporating AI functionality where appropriate
-        
-        """
+        description "MobilityCorp is a leading provider of on-demand vehicle rental services, offering a diverse fleet of vehicles for short-term use through a user-friendly mobile and web application platform."
 
         style {
             color muted
@@ -104,9 +62,7 @@ model {
         }
 
         api_gateway = container 'API Gateway' {
-            description """
-            API Gateway - Unified entry point for client APIs with security, routing, and observability
-            """
+            description "API Gateway - Unified entry point for client APIs with security, routing, and observability"
 
             link ../fleeting_ai/api-gateway.md 'Full Documentation'
 
@@ -114,9 +70,7 @@ model {
         }
 
         edge_ingest_gateway = container 'Edge Ingest Gateway' {
-            description """
-            Edge Ingest Gateway - Secure, scalable IoT telemetry ingestion with protocol translation
-            """
+            description "Edge Ingest Gateway - Secure, scalable IoT telemetry ingestion with protocol translation"
 
             link ../fleeting_ai/edge-ingest-gateway.md 'Full Documentation'
 
@@ -132,20 +86,10 @@ model {
         }
 
         applications = group 'Applications' {
-            description """
-            # Applications
+            description "The applications group contains all client-facing applications that interact with the MobilityCorp system, providing interfaces for customers and staff to access services."
 
-            The applications group contains all client-facing applications that interact with the MobilityCorp system, providing interfaces for customers and staff to access services.
-
-            """
-
-            customer_app = mobile 'MobilityCorp' {
-                description """
-                # MobilityCorp for Customers
-
-                The application allows customers to browse available vehicles, make bookings, and manage their rentals on Apple devices.
-
-                """
+            customer_app = mobile 'MobilityCorp for Customers' {
+                description "The application allows customers to browse available vehicles, make bookings, and manage their rentals on Apple devices."
 
                 technology 'React Native'
 
@@ -153,12 +97,7 @@ model {
             }
 
             staff_app = mobile 'MobilityCorp Staff' {
-                description """
-                # MobilityCorp for Staff
-
-                The application enables MobilityCorp staff to manage vehicle maintenance, monitor fleet status, and provide customer support on Android devices.
-
-                """
+                description "The application enables MobilityCorp staff to manage vehicle maintenance, monitor fleet status, and provide customer support on Android devices."
 
                 technology 'React Native'
 
@@ -166,17 +105,11 @@ model {
             }
 
             web_app = webapp 'MobilityCorp Web Portal' {
-                description """
-                # MobilityCorp Web Portal
-
-                The web portal provides an alternative interface for customers and staff to access MobilityCorp services via web browsers.
-
-                """
+                description "The web portal provides an alternative interface for customers and staff to access MobilityCorp services via web browsers."
 
                 technology 'SvelteKit'
 
                 -> api_gateway 'Uses' "HTTPS/REST/JSON"
-
 
             }
 

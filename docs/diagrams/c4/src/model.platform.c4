@@ -56,7 +56,11 @@ model {
                         
                         """
 
-                        -> object_store_bronze 'Archived segments/snapshots'
+                        -> object_store_bronze 'Archived telemetry snapshots' {
+                                title 'Telemetry Archive'
+                                description 'Raw IoT telemetry (GPS, battery, faults) stored in object store for reprocessing and model training.'
+                                technology 'Kafka Connect S3 Sink | Parquet/JSON'
+                            }
                     }
                     topic_inventory_updates = queue 'veh.inventory.updates' {
                         description """
@@ -78,6 +82,13 @@ model {
                         # Business events from microservices (booking_created, payment_authorized, return_completed, etc.).
                         
                         """
+
+                        -> data_layers.object_store_bronze 'Sink for replay and ML' {
+                                title 'Immutable Event Archive'
+                                description 'Kafka Connect sink writes raw business events to S3/MinIO in partitioned folders for replay, audit, and ML training.'
+                                technology 'Kafka Connect S3 Sink | Parquet/Avro'
+                            }
+                        -> platform.stream_processor.flink_jobs 'Consumes'
                     }
                 
                 }
@@ -104,8 +115,13 @@ model {
 
                       -> queues.topic_inventory_updates 'Publishes'
                       -> queues.topic_alerts 'Publishes'
-                      -> timeseries_olap_db 'Upserts facts'
+                      -> timeseries_olap_db 'Upserts analytical facts' {
+                            title 'Stream Enrichment & Aggregation'
+                            description 'Flink/ksqlDB jobs perform stateful joins and windowed aggregations, producing hourly fact tables (vehicle usage, charge cycles, booking durations).'
+                            technology 'Flink / ksqlDB / Kafka Streams → ClickHouse / TimescaleDB'
+                        }
                       -> read_model_db 'Updates projections'
+                      
                     }
 
                     ksqldb_pipelines = component 'ksqlDB Pipelines' {
@@ -196,7 +212,11 @@ model {
 
                     technology 'dbt on ClickHouse/Postgres'
 
-                    -> embed_pipeline 'Reads'
+                    -> embed_pipeline 'Generates embeddings' {
+                            title 'Semantic Embedding Generation'
+                            description 'dbt-produced curated marts are transformed into structured markdown or JSON, then embedded for AI retrieval.'
+                            technology 'Python | LlamaIndex / LangChain | Bedrock Titan Embeddings'
+                        }
                 }
 
             }
@@ -213,7 +233,11 @@ model {
                 technology 'Airflow/Prefect + dbt'
 
 
-                 -> data_layers.gold_marts 'Writes'
+                -> data_layers.gold_marts 'Builds curated marts' {
+                        title 'Data Curation with dbt'
+                        description 'Scheduled workflows transform Silver analytical facts into curated dimensional marts for BI and AI.'
+                        technology 'Airflow / Prefect • dbt Core'
+                    }
             }
 
             // Observability (shared)

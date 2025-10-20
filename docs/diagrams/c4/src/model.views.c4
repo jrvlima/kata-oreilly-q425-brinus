@@ -141,44 +141,37 @@ views {
 
         """
 
-        include customer_app
-        include customer_app.*
-
+        include customer
+        include applications.customer_app.*
+        include applications.web_app
+        include omf
+        include maas
         include api_gateway
-
         include microservices
-        include microservices.*
-
         include platform
-        include platform.*
 
     }
 
     view staff_app of mobiltiy_corp {
         title 'MobilityCorp / C4 / Staff Application Container View'
-        description """
-        # MobilityCorp Staff Application - Container View
+        description "This diagram provides a detailed view of the Staff Application within the MobilityCorp system, highlighting its components and interactions."
 
-        This diagram provides a detailed view of the Staff Application within the MobilityCorp system, highlighting its components and interactions.
+        include mobiltiy_corp_staff
+        include oncall_engineer
+        include applications.staff_app
+        include applications.web_app
 
-        """
-
-        include staff_app
-        include staff_app.*
+        include omf
+        include maas
 
         include api_gateway
-
         include microservices
-        include microservices.*
-
         include platform
-        include platform.*
-
     }
 
     
-    dynamic view s1_fresh_availability {
-        title 'Dynamic / S1 / Return triggers availability update'
+    dynamic view fresh_availability {
+        title 'Dynamic / Return triggers availability update'
 
         // Steps
         mobiltiy_corp.edge_ingest_gateway -> mobiltiy_corp.platform.message_broker.queues.topic_raw_events
@@ -205,8 +198,8 @@ views {
   }
 
 
-  dynamic view s2_burst_tolerance {
-    title 'Dynamic / S2 / Spike 2k→12k events; no loss; lag drains'
+  dynamic view burst_tolerance {
+    title 'Dynamic / Spike 2k→12k events; no loss; lag drains'
 
     mobiltiy_corp.edge_ingest_gateway
       -> mobiltiy_corp.platform.message_broker.queues.topic_raw_events
@@ -239,34 +232,8 @@ views {
       oncall_engineer
   }
 
-  dynamic view s3_late_data_correctness {
-    title 'Dynamic / S3 / Include 4-minute-late telemetry via event-time + watermark'
-
-    mobiltiy_corp.edge_ingest_gateway
-      -> mobiltiy_corp.platform.message_broker.queues.topic_raw_events
-      'Publish on-time telemetry (t=10:00)'
-
-    mobiltiy_corp.edge_ingest_gateway
-      -> mobiltiy_corp.platform.message_broker.queues.topic_raw_events
-      'Publish late telemetry (t=09:56, arrives 10:00:30)'
-
-    mobiltiy_corp.platform.message_broker.queues.topic_raw_events
-      -> mobiltiy_corp.platform.stream_processor
-      'Consume with WM = event_time − 5m'
-
-    mobiltiy_corp.platform.stream_processor
-      -> mobiltiy_corp.platform.timeseries_olap_db
-      'Upsert hourly aggregates (late record included)'
-
-    include
-      mobiltiy_corp.edge_ingest_gateway,
-      mobiltiy_corp.platform.message_broker.queues.topic_raw_events,
-      mobiltiy_corp.platform.stream_processor,
-      mobiltiy_corp.platform.timeseries_olap_db
-  }
-
-  dynamic view s4_exactly_once_projection {
-    title 'Dynamic / S4 / Restart + checkpoint resume; idempotent upserts'
+  dynamic view exactly_once_projection {
+    title 'Dynamic / Restart + checkpoint resume; idempotent upserts'
 
     mobiltiy_corp.platform.stream_processor
         -> mobiltiy_corp.platform.read_model_db
@@ -275,11 +242,11 @@ views {
     mobiltiy_corp.platform.stream_processor
         -> mobiltiy_corp.platform.otel
         'Checkpoint N; TX begin' {
-        notes '''
+        notes '
         **Mechanism**
         - Flink checkpoint barriers
         - Kafka transactions / idempotent sink
-        '''
+        '
         }
 
     mobiltiy_corp.platform.stream_processor

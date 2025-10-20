@@ -1,5 +1,4 @@
 views {
 
-  deployment view production-env {
-  }
+  
 }

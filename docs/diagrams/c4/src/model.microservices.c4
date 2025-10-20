@@ -189,7 +189,11 @@ model {
             }
 
             -> otel 'Emits metrics/traces'
-            -> platform.message_broker.topic_domain_events 'Publishes domain events'
+            -> platform.message_broker.topic_domain_events 'Publishes domain events' {
+                    title 'Domain Events Publication'
+                    description 'Microservices emit CloudEvents such as booking_created, payment_authorized, and return_completed.'
+                    technology 'Kafka | CloudEvents | JSON Schema'
+                }
             platform.message_broker.topic_domain_events -> microservices 'Consumes (react to events)'
         }
 
