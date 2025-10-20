@@ -17,62 +17,62 @@ views {
     }
 
     
-    view return_service of mobiltiy_corp.microservices.return_service {
-        title 'Microservices / Return Service'
-        description "Return Service - Manages vehicle return processes, including location tracking and condition reporting."
-        include *
+    // view return_service of mobiltiy_corp.microservices.return_service {
+    //     title 'Microservices / Return Service'
+    //     description "Return Service - Manages vehicle return processes, including location tracking and condition reporting."
+    //     include *
         
-    }
+    // }
 
-    view payment_service of mobiltiy_corp.microservices.payment_service {
-        title 'Microservices / Payment Service'
-        description "Payment Service - Handles all financial transactions, including payments and refunds."
-        include *
+    // view payment_service of mobiltiy_corp.microservices.payment_service {
+    //     title 'Microservices / Payment Service'
+    //     description "Payment Service - Handles all financial transactions, including payments and refunds."
+    //     include *
         
-    }
+    // }
 
-    view bay_management_service of mobiltiy_corp.microservices.bay_management_service {
-        title 'Microservices / Bay Management Service'
-        description "Bay Management Service - Oversees the management of parking bays for vehicle returns and rentals."
-        include *
+    // view bay_management_service of mobiltiy_corp.microservices.bay_management_service {
+    //     title 'Microservices / Bay Management Service'
+    //     description "Bay Management Service - Oversees the management of parking bays for vehicle returns and rentals."
+    //     include *
         
-    }
+    // }
 
-    view bike_scooter_charging_distribution_service of mobiltiy_corp.microservices.bike_scooter_charging_distribution_service {
-        title 'Microservices / Bike and Scooter Charging & Distribution Service'
-        description "Bike/Scooter Charging & Distribution Service - Manages the logistics of charging and distributing electric bikes and scooters."
-        include *
-    }
+    // view bike_scooter_charging_distribution_service of mobiltiy_corp.microservices.bike_scooter_charging_distribution_service {
+    //     title 'Microservices / Bike and Scooter Charging & Distribution Service'
+    //     description "Bike/Scooter Charging & Distribution Service - Manages the logistics of charging and distributing electric bikes and scooters."
+    //     include *
+    // }
 
-    view veihcles_fleet_management_service of mobiltiy_corp.microservices.veihcles_fleet_management_service {
-        title 'Microservices / Vehicles Fleet Management Service'
-        description "Fleet Management Service - Oversees the maintenance, tracking, and allocation of the vehicle fleet."
-        include *
-    }
+    // view veihcles_fleet_management_service of mobiltiy_corp.microservices.veihcles_fleet_management_service {
+    //     title 'Microservices / Vehicles Fleet Management Service'
+    //     description "Fleet Management Service - Oversees the maintenance, tracking, and allocation of the vehicle fleet."
+    //     include *
+    // }
 
-    view veihcles_tracking_service of mobiltiy_corp.microservices.veihcles_tracking_service {
-        title 'Microservices / Vehicles Tracking Service'
-        description "Vehicles Tracking Service - Provides real-time tracking and location services for all vehicles in the fleet."
-        include *
-    }
+    // view veihcles_tracking_service of mobiltiy_corp.microservices.veihcles_tracking_service {
+    //     title 'Microservices / Vehicles Tracking Service'
+    //     description "Vehicles Tracking Service - Provides real-time tracking and location services for all vehicles in the fleet."
+    //     include *
+    // }
 
-    view telemetry_service of mobiltiy_corp.microservices.telemetry_service {
-        title 'Microservices / Telemetry Service'
-        description "Telemetry Service - Collects and analyzes telemetry data from vehicles to monitor performance and usage."
-        include *
-    }
+    // view telemetry_service of mobiltiy_corp.microservices.telemetry_service {
+    //     title 'Microservices / Telemetry Service'
+    //     description "Telemetry Service - Collects and analyzes telemetry data from vehicles to monitor performance and usage."
+    //     include *
+    // }
 
-    view booking_service of mobiltiy_corp.microservices.booking_service {
-        title 'Microservices / Booking Service'
-        description "Booking Service - Manages customer bookings, reservations, and availability of vehicles."
-        include *
-    }
+    // view booking_service of mobiltiy_corp.microservices.booking_service {
+    //     title 'Microservices / Booking Service'
+    //     description "Booking Service - Manages customer bookings, reservations, and availability of vehicles."
+    //     include *
+    // }
 
-    view customer_management_service of mobiltiy_corp.microservices.customer_management_service {
-        title 'Microservices / Customer Management Service'
-        description "Customer Management Service - Handles customer profiles, authentication, and preferences."
-        include *   
+    // view customer_management_service of mobiltiy_corp.microservices.customer_management_service {
+    //     title 'Microservices / Customer Management Service'
+    //     description "Customer Management Service - Handles customer profiles, authentication, and preferences."
+    //     include *   
 
-    }
+    // }
 
 }
