@@ -1,0 +1,237 @@
+/**
+ * Computer Vision Verification System - C4 Views
+ *
+ * This file defines visual perspectives for the CV Verification System
+ * across C4 levels: Context, Container, Component
+ *
+ * Related: model.cv_verification.c4, ADR-002-computer-vision-for-operations.md
+ */
+
+views {
+
+    // =============================================================================
+    // Level 1: System Context - CV Verification in MobilityCorp Ecosystem
+    // =============================================================================
+
+    view cv_system_context of mobiltiy_corp.cv_verification {
+        title '[CV] Level 1: System Context - Computer Vision Verification'
+        description '
+            Shows CV Verification System in MobilityCorp ecosystem.
+            External dependencies: Weaviate Cloud (RAG), OpenAI/Anthropic/Azure (LLMs)
+        '
+
+        include *
+        include customer
+        include mobiltiy_corp.customer_app
+        include mobiltiy_corp.api_gateway
+        include cv_openai_api
+        include cv_anthropic_api
+        include cv_azure_openai_api
+        include cv_weaviate_cloud
+
+        style cv_openai_api, cv_anthropic_api, cv_azure_openai_api {
+            color purple
+        }
+        style cv_weaviate_cloud {
+            color indigo
+        }
+    }
+
+    // =============================================================================
+    // Level 2: Container - CV System Architecture
+    // =============================================================================
+
+    view cv_containers of mobiltiy_corp {
+        title '[CV] Level 2: Container - CV Verification Architecture'
+        description '
+            High-level CV Verification architecture:
+            - Mobile App: Photo capture
+            - CV Verification System: Core processing
+            - Weaviate Cloud: RAG vector database
+            - LLM Providers: OpenAI (primary), Anthropic (fallback), Azure (enterprise)
+            - Storage: S3 photos + PostgreSQL audit
+        '
+
+        include mobiltiy_corp.cv_verification
+        include mobiltiy_corp.cv_photo_storage
+        include mobiltiy_corp.cv_audit_db
+        include mobiltiy_corp.cv_web_dashboard
+        include mobiltiy_corp.customer_app
+        include mobiltiy_corp.api_gateway
+        include customer
+        include cv_openai_api
+        include cv_anthropic_api
+        include cv_azure_openai_api
+        include cv_weaviate_cloud
+
+        style mobiltiy_corp.cv_verification {
+            color blue
+        }
+        style mobiltiy_corp.cv_web_dashboard {
+            color amber
+        }
+    }
+
+    // =============================================================================
+    // Level 3: Component - CV Verification Internals
+    // =============================================================================
+
+    view cv_components of mobiltiy_corp.cv_verification {
+        title '[CV] Level 3: Component - CV Verification Internals'
+        description '
+            Internal components:
+            - Photo Upload API → Preprocessing (resize, blur faces)
+            - Verification Orchestrator (core logic)
+            - RAG Retrieval (query Weaviate for 5 similar photos)
+            - LLM Abstraction Layer (provider switching)
+            - Decision Handler (apply business rules)
+            - Confidence Checker (route to human review if needed)
+            - Circuit Breaker (auto-failover)
+        '
+
+        include *
+        include mobiltiy_corp.cv_photo_storage
+        include mobiltiy_corp.cv_audit_db
+        include cv_openai_api
+        include cv_anthropic_api
+        include cv_azure_openai_api
+        include cv_weaviate_cloud
+
+        style mobiltiy_corp.cv_verification.cv_orchestrator {
+            color blue
+        }
+        style mobiltiy_corp.cv_verification.cv_llm_abstraction {
+            color purple
+        }
+        style mobiltiy_corp.cv_verification.cv_rag_service {
+            color indigo
+        }
+        style mobiltiy_corp.cv_verification.cv_circuit_breaker {
+            color red
+        }
+    }
+
+    // =============================================================================
+    // Use Case: Docking Verification Flow
+    // =============================================================================
+
+    view cv_docking_flow of mobiltiy_corp.cv_verification {
+        title '[CV] Use Case: Docking Verification (Bikes/Scooters)'
+        description '
+            Flow:
+            1. User submits photo → Upload API
+            2. Preprocessing (resize, blur faces)
+            3. RAG: Find 5 similar docking photos from Weaviate
+            4. LLM (GPT-4V) analyzes with context
+            5. Decision: PASS/FAIL + confidence + reasoning
+            6. If FAIL: Push notification "Fix in 5 mins"
+        '
+
+        include mobiltiy_corp.cv_verification.cv_photo_upload_api
+        include mobiltiy_corp.cv_verification.cv_preprocessing
+        include mobiltiy_corp.cv_verification.cv_orchestrator
+        include mobiltiy_corp.cv_verification.cv_rag_service
+        include mobiltiy_corp.cv_verification.cv_llm_abstraction
+        include mobiltiy_corp.cv_verification.cv_openai_provider
+        include mobiltiy_corp.cv_verification.cv_decision_handler
+        include mobiltiy_corp.cv_verification.cv_confidence_checker
+        include cv_weaviate_cloud
+        include cv_openai_api
+
+        style mobiltiy_corp.cv_verification.cv_orchestrator {
+            color blue
+        }
+    }
+
+    // =============================================================================
+    // Use Case: Damage Detection Flow
+    // =============================================================================
+
+    view cv_damage_flow of mobiltiy_corp.cv_verification {
+        title '[CV] Use Case: Damage Detection (Before/After)'
+        description '
+            Flow:
+            START: User takes 4 photos → LLM analyzes → damage_score = 20%
+            END: User takes 4 photos → RAG retrieves before photos
+                 → LLM compares → delta = 4%
+                 → If delta ≤ 5%: Auto-approve (tolerance)
+                 → If delta 5-25%: Charge €20-50
+                 → If delta > 25%: Flag for insurance
+        '
+
+        include mobiltiy_corp.cv_verification.cv_photo_upload_api
+        include mobiltiy_corp.cv_verification.cv_orchestrator
+        include mobiltiy_corp.cv_verification.cv_rag_service
+        include mobiltiy_corp.cv_verification.cv_llm_abstraction
+        include mobiltiy_corp.cv_verification.cv_decision_handler
+        include mobiltiy_corp.cv_audit_db
+        include cv_weaviate_cloud
+        include cv_openai_api
+
+        style mobiltiy_corp.cv_verification.cv_decision_handler {
+            color green
+        }
+    }
+
+    // =============================================================================
+    // Failure Scenario: LLM Provider Failover
+    // =============================================================================
+
+    view cv_provider_failover of mobiltiy_corp.cv_verification {
+        title '[CV] Resilience: LLM Provider Failover'
+        description '
+            Automatic failover when primary provider fails:
+            1. OpenAI returns 503 error
+            2. Circuit Breaker triggers after 3 failures
+            3. Switch to Anthropic Claude instantly
+            4. Zero downtime
+            5. If both fail → Azure OpenAI (enterprise SLA)
+        '
+
+        include mobiltiy_corp.cv_verification.cv_orchestrator
+        include mobiltiy_corp.cv_verification.cv_llm_abstraction
+        include mobiltiy_corp.cv_verification.cv_openai_provider
+        include mobiltiy_corp.cv_verification.cv_anthropic_provider
+        include mobiltiy_corp.cv_verification.cv_azure_provider
+        include mobiltiy_corp.cv_verification.cv_circuit_breaker
+        include cv_openai_api
+        include cv_anthropic_api
+        include cv_azure_openai_api
+
+        style mobiltiy_corp.cv_verification.cv_circuit_breaker {
+            color red
+        }
+        style mobiltiy_corp.cv_verification.cv_anthropic_provider {
+            color green
+        }
+    }
+
+    // =============================================================================
+    // Workflow: Low Confidence → Human Review
+    // =============================================================================
+
+    view cv_human_review of mobiltiy_corp.cv_verification {
+        title '[CV] Workflow: Low Confidence → Human Review'
+        description '
+            When AI confidence < 90%:
+            1. Confidence Checker flags case
+            2. Added to Review Queue (Redis)
+            3. Staff reviews in dashboard
+            4. Staff decision stored in Weaviate → becomes RAG example
+            5. System learns from correction (continuous improvement)
+        '
+
+        include mobiltiy_corp.cv_web_dashboard
+        include mobiltiy_corp.cv_verification.cv_decision_handler
+        include mobiltiy_corp.cv_verification.cv_confidence_checker
+        include mobiltiy_corp.cv_verification.cv_review_queue
+        include cv_weaviate_cloud
+
+        style mobiltiy_corp.cv_web_dashboard {
+            color amber
+        }
+        style mobiltiy_corp.cv_verification.cv_review_queue {
+            color red
+        }
+    }
+}
