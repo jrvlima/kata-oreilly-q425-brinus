@@ -122,6 +122,10 @@ npx likec4 serve
 
 #### 🎨 What Diagrams to Review
 
+**For a complete index and descriptions of all 22 diagrams, see [`docs/11_c4_architecture_diagrams.md`](docs/11_c4_architecture_diagrams.md)**
+
+**Key diagrams to focus on**:
+
 **System Context (Level 1)**:
 - `index.png` - MobilityCorp system in relation to users and external systems
 
@@ -131,16 +135,19 @@ npx likec4 serve
 - `cv_system_context.png` - CV Verification system integration
 
 **Component Level (Level 3)** - Shows internal architecture:
+- `cv_containers.png` - CV system containers
 - `cv_components.png` - CV system components (RAG, LLM abstraction, decision logic)
 - `cv_docking_flow.png` - Docking verification workflow (eBikes/scooters)
 - `cv_damage_flow.png` - Damage detection workflow (before/after comparison)
 
-**Failure Scenarios**:
+**Failure Scenarios & Advanced Patterns**:
 - `cv_provider_failover.png` - How system handles LLM provider failures
 - `cv_human_review.png` - Human review workflow for low-confidence cases
+- `broker.png` - Message broker and event streaming infrastructure
+- `stream_processor.png` - Real-time stream processing patterns
 
 **Where diagrams address judging criteria**:
-- **Criterion #3** (Appropriate Levels of Detail): We provide System Context, Container, Component, and Code levels
+- **Criterion #3** (Appropriate Levels of Detail): We provide System Context, Container, Component, and Code levels across 22 views
 - **Criterion #5** (Architectural Characteristics Match): Diagrams show our AI is additive to existing event-driven architecture
 
 ---
