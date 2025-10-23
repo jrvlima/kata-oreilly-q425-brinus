@@ -507,7 +507,7 @@ kata-oreilly-q425-brinus/
         │   ├── model.c4               # Core system model
         │   ├── model.platform.c4      # Event-driven platform backbone
         │   ├── model.microservices.c4 # Business domain services
-        │   ├── model.ai_analytics.c4  # AI systems container
+        │   ├── model.ai_systems.c4  # AI systems container
         │   ├── model.cv_verification.c4        # CV system components
         │   ├── model.cv_verification.views.c4  # CV workflow views
         │   └── ...
@@ -561,7 +561,7 @@ npx likec4 serve
 5. **telemetry.png** - Telemetry Pipeline
 6. **customer_app.png** - Customer Application
 7. **staff_app.png** - Staff Application
-8. **ai_analytics.png** - AI Systems
+8. **ai_systems.png** - AI Systems
 9. **data_layers.png** - Data Architecture
 10. **fresh_availability.png** - Dynamic: Availability Update
 11. **burst_tolerance.png** - Dynamic: Spike Handling

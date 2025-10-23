@@ -27,7 +27,7 @@ views {
         include message_broker
         include message_broker.*
 
-        include mobiltiy_corp.ai_analytics
+        include mobiltiy_corp.ai_systems
         include mobiltiy_corp.platform.data_layers
         include mobiltiy_corp.platform.queues
         include mobiltiy_corp.platform.batch_orchestrator
