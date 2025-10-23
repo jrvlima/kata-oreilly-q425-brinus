@@ -12,7 +12,7 @@ This submission includes all required deliverables as specified in the competiti
 | Required Deliverable | Status | Location | Description |
 |---------------------|--------|----------|-------------|
 | **1️⃣ Overview Narrative** | ✅ **Complete** | [`docs/OVERVIEW.md`](docs/OVERVIEW.md) | Comprehensive narrative (18KB) describing how Team BRINUS uses AI to solve MobilityCorp's 3 business challenges |
-| **2️⃣ Architecture Diagrams** | ✅ **Complete** | [`docs/diagrams/c4/src/`](docs/diagrams/c4/src/) | 16 C4 model source files (.c4) providing comprehensive and targeted views for each AI use case |
+| **2️⃣ Architecture Diagrams** | ✅ **Complete** | [`docs/diagrams/c4/src/`](docs/diagrams/c4/src/) | 11 C4 model source files (.c4) providing comprehensive and targeted views for each AI use case |
 | **3️⃣ Architecture Decision Records** | ✅ **Complete** | [`docs/adrs/`](docs/adrs/) | 3 comprehensive ADRs (77KB total) with detailed trade-off analysis for AI-related implementations |
 | **4️⃣ Implementation Details** | ✅ **Complete** (Optional) | [`docs/TECHNICAL_DEEP_DIVE.md`](docs/TECHNICAL_DEEP_DIVE.md) | Technical implementation guide (28KB) with working TypeScript code examples |
 
@@ -203,19 +203,6 @@ npx likec4 serve
 
 ---
 
-### Step 6 (Optional): Additional Context
-
-**Business Requirements**: [`docs/01_preamble/`](docs/01_preamble/)
-- `preamble.md` - Business context, personas, use cases
-- `software_requirements.md` - Functional requirements
-- `technical_requirements.md` - Technical constraints
-
-**Competition Materials**:
-- [`Q4Qata2025.md`](Q4Qata2025.md) - Original problem statement
-- [`qata-description.md`](qata-description.md) - Competition overview
-
----
-
 ## 🏆 How We Address Each Judging Criterion
 
 ### ✅ 1. Innovative Use of Generative AI
@@ -281,7 +268,7 @@ npx likec4 serve
 | **Low-Level** (Design) | C4 diagrams (Context, Container, Component) | [`docs/diagrams/c4/src/`](docs/diagrams/c4/src/) |
 | **Implementation** (Code) | TypeScript examples, algorithms, APIs | [`docs/TECHNICAL_DEEP_DIVE.md`](docs/TECHNICAL_DEEP_DIVE.md) |
 
-**C4 Diagram Coverage** (16 source files, 14 rendered views):
+**C4 Diagram Coverage** (11 source files, 14 rendered views):
 - System Context (1 view)
 - Container Level (7 views: full system, platform, microservices, telemetry, customer app, staff app, AI systems)
 - Component Level (3 views: CV components, docking flow, damage flow)
@@ -506,35 +493,27 @@ kata-oreilly-q425-brinus/
 ├── README.md                          # This file (judge's guide)
 ├── .gitignore                         # Excludes generated PNG files
 │
-├── docs/
-│   ├── OVERVIEW.md                    # ⭐ Executive summary (18KB)
-│   ├── TECHNICAL_DEEP_DIVE.md         # Implementation guide (28KB)
-│   │
-│   ├── adrs/                          # Architecture Decision Records
-│   │   ├── ADR-001-adopt-omf-standards.md              # Foundation (5.1KB)
-│   │   ├── ADR-002-computer-vision-for-operations.md   # Main AI solution (46KB)
-│   │   └── ADR-003-geofence-and-wrong-way-detection.md # Edge AI (26KB)
-│   │
-│   ├── diagrams/c4/                   # C4 Model diagrams
-│   │   ├── src/                       # LikeC4 source files (16 files)
-│   │   │   ├── model.c4               # Core system model
-│   │   │   ├── model.platform.c4      # Event-driven platform backbone
-│   │   │   ├── model.microservices.c4 # Business domain services
-│   │   │   ├── model.ai_analytics.c4  # AI systems container
-│   │   │   ├── model.cv_verification.c4        # CV system components
-│   │   │   ├── model.cv_verification.views.c4  # CV workflow views
-│   │   │   └── ...
-│   │   ├── png/                       # Generated diagrams (run: npx likec4 build)
-│   │   ├── package.json               # LikeC4 dependencies
-│   │   └── likec4.config.ts           # Build configuration
-│   │
-│   └── 01_preamble/                   # Business requirements
-│       ├── preamble.md                # Business context & personas
-│       ├── software_requirements.md   # Functional requirements
-│       └── technical_requirements.md  # Technical constraints
-│
-├── Q4Qata2025.md                      # Competition problem statement
-└── qata-description.md                # Competition overview
+└── docs/
+    ├── OVERVIEW.md                    # ⭐ Executive summary (18KB)
+    ├── TECHNICAL_DEEP_DIVE.md         # Implementation guide (28KB)
+    │
+    ├── adrs/                          # Architecture Decision Records
+    │   ├── ADR-001-adopt-omf-standards.md              # Foundation (5.1KB)
+    │   ├── ADR-002-computer-vision-for-operations.md   # Main AI solution (46KB)
+    │   └── ADR-003-geofence-and-wrong-way-detection.md # Edge AI (26KB)
+    │
+    └── diagrams/c4/                   # C4 Model diagrams
+        ├── src/                       # LikeC4 source files (11 files)
+        │   ├── model.c4               # Core system model
+        │   ├── model.platform.c4      # Event-driven platform backbone
+        │   ├── model.microservices.c4 # Business domain services
+        │   ├── model.ai_analytics.c4  # AI systems container
+        │   ├── model.cv_verification.c4        # CV system components
+        │   ├── model.cv_verification.views.c4  # CV workflow views
+        │   └── ...
+        ├── png/                       # Generated diagrams (run: npx likec4 build)
+        ├── package.json               # LikeC4 dependencies
+        └── likec4.config.ts           # Build configuration
 ```
 
 ---
@@ -609,10 +588,6 @@ npx likec4 serve
 ---
 
 ## 📚 Additional Resources
-
-### Competition Materials
-- Problem statement: [`Q4Qata2025.md`](Q4Qata2025.md)
-- Competition description: [`qata-description.md`](qata-description.md)
 
 ### Technical References
 - [C4 Model](https://c4model.com/) - Diagram notation we use
