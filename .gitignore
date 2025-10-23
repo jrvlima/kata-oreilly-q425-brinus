@@ -8,7 +8,7 @@ build/
 *.log
 
 # LikeC4 generated files (can be regenerated with: npx likec4 build)
-docs/diagrams/c4/png/
+# docs/diagrams/c4/png/ - Commented out to include PNGs in git for competition submission
 
 # IDE
 .vscode/
