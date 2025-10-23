@@ -73,7 +73,7 @@ model {
     // Extend Existing Containers (add CV relationships)
     // =============================================================================
 
-    extend mobiltiy_corp.customer_app {
+    extend mobiltiy_corp.applications.customer_app {
         -> mobiltiy_corp.cv_verification 'Uploads 2-4 verification photos' 'HTTPS/JSON'
     }
 

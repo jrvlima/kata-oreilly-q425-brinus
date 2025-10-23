@@ -30,7 +30,7 @@ views {
         include cv_weaviate_cloud
 
         style cv_openai_api, cv_anthropic_api, cv_azure_openai_api {
-            color purple
+            color mobilitycorp-purple
         }
         style cv_weaviate_cloud {
             color indigo
@@ -101,7 +101,7 @@ views {
             color blue
         }
         style mobiltiy_corp.cv_verification.cv_llm_abstraction {
-            color purple
+            color mobilitycorp-purple
         }
         style mobiltiy_corp.cv_verification.cv_rag_service {
             color indigo
