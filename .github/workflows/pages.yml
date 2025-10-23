@@ -61,7 +61,7 @@ jobs:
         with:
           action: build
           workdir: docs/diagrams/c4
-          output: dist
+          output: docs/diagrams/c4/dist
           # required if you don't set a custom domain for the repository
           # https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#types-of-github-pages-sites
           base: ${{ steps.pages.outputs.base_path }}
@@ -71,7 +71,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./docs/diagrams/c4/dist
+          path: docs/diagrams/c4/dist
 
   # Deployment job
   deploy-pages:
