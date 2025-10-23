@@ -367,3 +367,160 @@ Used for serializing messages in Kafka topics and long-term storage in the Bronz
 Used in the Silver and Bronze layers to store telemetry and domain event data in a space-efficient and query-friendly format, typically as output of Kafka Connect sinks or Airflow/dbt transformations.  
 
 ---
+
+## GDPR
+
+The General Data Protection Regulation (GDPR) is a major data-protection law enacted by the European Union (EU).
+
+---
+
+## PSD2
+
+PSD2 is the European Union directive formally titled Directive (EU) 2015/2366 on payment services in the internal market.
+
+## eIDAS
+
+“eIDAS” stands for Electronic Identification, Authentication and Trust Services.
+
+It is the EU regulation formally known as Regulation (EU) No 910/2014 on electronic identification and trust services for electronic transactions in the internal market. 
+Wikipedia
+
+It entered into force on 1 July 2016 (though adopted earlier) and applies across all EU Member States.
+
+## EN 301 549
+
+EN 301 549 is the European accessibility standard that defines requirements for ICT (Information and Communication Technology) products and services to be accessible to people with disabilities.
+
+It’s essentially Europe’s version of the WCAG (Web Content Accessibility Guidelines) — but broader, covering not only websites and apps, but also software, hardware, and digital services used by the public sector.
+
+---
+
+## Customer Acquisition Cost (CAC)
+
+Customer Acquisition Cost (CAC) is a key business metric that measures how much it costs to acquire a new customer.
+
+### Formally
+
+```plain
+CAC = Total Sales and Marketing Costs / Number of New Customers Acquired
+```​
+
+### Example
+
+If a company spends $100,000 on marketing and sales in a month and gains 500 new customers, then:
+
+```plain
+CAC = 100.000 / 500 = 200
+```
+
+So the CAC = $200 per customer.
+
+### What’s Included in “Sales and Marketing Costs”
+
+- Advertising (Google Ads, Meta Ads, etc.)
+- Sales team salaries and commissions
+- Marketing team salaries
+- Software/tools (CRM, analytics, automation tools)
+- Promotional content, events, partnerships
+
+### Why CAC Matters
+
+Profitability: If your CAC is higher than your Customer Lifetime Value (LTV), your business model is not sustainable.
+Efficiency Indicator: Shows how effective your marketing and sales processes are.
+Investor Metric: Startups and SaaS companies often highlight CAC vs. LTV in fundraising.
+
+---
+
+## Customer Lifetime Value (CLTV or LTV)
+
+Customer Lifetime Value (CLTV or LTV) measures the total revenue (or profit) a business can expect to earn from a single customer over the entire duration of their relationship.
+
+It answers the question:
+
+“How much is each customer worth to my business in the long run?”
+
+### Basic Formula
+
+CLTV = Average Purchase Value × Purchase Frequency × Customer Lifespan
+
+For subscription or SaaS models, a more precise version is:
+
+CLTV = Average Revenue per Customer per Month / Churn Rate
+
+If you want to include profitability:
+
+CLTV = Average Revenue per Customer per Month × Gross Margin / Churn Rate
+
+### Example
+
+Let’s say your SaaS app charges $50/month, has a 5% monthly churn rate, and an 80% gross margin.
+
+CLTV = 50 × 0.8 / 0.05 = 800
+
+So the Customer Lifetime Value = $800.
+
+### Why It Matters
+
+- Measures long-term profitability: Knowing how much value each customer brings helps set a ceiling for acquisition costs.
+- Guides marketing and retention strategy: You can decide how much to invest to acquire or retain customers.
+- Investor insight: A high LTV relative to CAC indicates a scalable and healthy business.
+
+### Relationship Between LTV and CAC
+
+| Metric      | Meaning                                       | Ideal Ratio                             |
+| ----------- | --------------------------------------------- | --------------------------------------- |
+| **LTV:CAC** | How much value you get vs. how much you spend | **3:1 or higher** is considered healthy |
+| **< 1:1**   | You’re losing money acquiring customers       |                                         |
+| **> 5:1**   | You may be under-investing in growth          |                                         |
+
+---
+
+## Churn Rate
+
+Churn Rate (or Customer Attrition Rate) measures the percentage of customers who stop using your product or service over a given period.
+
+“How fast are we losing customers?”
+
+### Formula
+
+```plain
+Churn Rate = (Customers Lost During Period / Customers at Start of Period) × 100
+````
+
+### Example
+
+If you start the month with 1,000 customers and lose 50:
+
+```plain
+Churn Rate = (50 / 1000) × 100 = 5%
+```
+
+Monthly Churn Rate = 5%
+
+### Types of Churn
+
+| Type                          | Description                                      |
+| ----------------------------- | ------------------------------------------------ |
+| **Customer Churn**            | % of customers who leave                         |
+| **Revenue Churn (MRR Churn)** | % of recurring revenue lost                      |
+| **Gross Churn**               | Revenue lost before upsells/expansions           |
+| **Net Churn**                 | Considers both losses and gains (e.g., upgrades) |
+
+### Why It Matters
+
+Retention Health: High churn → customers aren’t finding value
+
+Growth Limit: Even strong acquisition can’t offset high churn
+
+LTV Impact: Churn directly reduces Customer Lifetime Value
+
+### Relationship with CLTV
+
+```plain
+Customer Lifetime (months) ≈ 1 / Churn Rate
+CLTV = Average Revenue per Customer per Month / Churn Rate
+```
+
+#### Example
+
+If Churn = 5%, average lifetime ≈ 20 months.

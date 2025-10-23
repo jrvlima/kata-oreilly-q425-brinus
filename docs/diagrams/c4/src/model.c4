@@ -77,7 +77,6 @@ model {
             technology 'Envoy/EMQX/Nginx + CloudEvents'
 
 
-            -> mobiltiy_corp.message_broker 'Publishes events to' "CloudEvents Avro/Proto"
             -> mobiltiy_corp.schema_registry 'Validates schema with'
             -> mobiltiy_corp.microservices 'Sends data to'
 
