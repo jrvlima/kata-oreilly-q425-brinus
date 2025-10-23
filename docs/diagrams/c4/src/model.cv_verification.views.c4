@@ -14,7 +14,7 @@ views {
     // =============================================================================
 
     view cv_system_context of mobiltiy_corp.cv_verification {
-        title '[CV] Level 1: System Context - Computer Vision Verification'
+        title 'CV / Level 1: System Context - Computer Vision Verification'
         description '
             Shows CV Verification System in MobilityCorp ecosystem.
             External dependencies: Weaviate Cloud (RAG), OpenAI/Anthropic/Azure (LLMs)
@@ -42,7 +42,7 @@ views {
     // =============================================================================
 
     view cv_containers of mobiltiy_corp {
-        title '[CV] Level 2: Container - CV Verification Architecture'
+        title 'CV / Level 2: Container - CV Verification Architecture'
         description '
             High-level CV Verification architecture:
             - Mobile App: Photo capture
@@ -77,7 +77,7 @@ views {
     // =============================================================================
 
     view cv_components of mobiltiy_corp.cv_verification {
-        title '[CV] Level 3: Component - CV Verification Internals'
+        title 'CV / Level 3: Component - CV Verification Internals'
         description '
             Internal components:
             - Photo Upload API → Preprocessing (resize, blur faces)
@@ -116,7 +116,7 @@ views {
     // =============================================================================
 
     view cv_docking_flow of mobiltiy_corp.cv_verification {
-        title '[CV] Use Case: Docking Verification (Bikes/Scooters)'
+        title 'CV / Use Case: Docking Verification (Bikes->Scooters)'
         description '
             Flow:
             1. User submits photo → Upload API
@@ -148,7 +148,7 @@ views {
     // =============================================================================
 
     view cv_damage_flow of mobiltiy_corp.cv_verification {
-        title '[CV] Use Case: Damage Detection (Before/After)'
+        title 'CV / Use Case: Damage Detection (Before->After)'
         description '
             Flow:
             START: User takes 4 photos → LLM analyzes → damage_score = 20%
@@ -178,7 +178,7 @@ views {
     // =============================================================================
 
     view cv_provider_failover of mobiltiy_corp.cv_verification {
-        title '[CV] Resilience: LLM Provider Failover'
+        title 'CV / Resilience: LLM Provider Failover'
         description '
             Automatic failover when primary provider fails:
             1. OpenAI returns 503 error
@@ -211,7 +211,7 @@ views {
     // =============================================================================
 
     view cv_human_review of mobiltiy_corp.cv_verification {
-        title '[CV] Workflow: Low Confidence → Human Review'
+        title 'CV / Workflow Low Confidence → Human Review'
         description '
             When AI confidence < 90%:
             1. Confidence Checker flags case
