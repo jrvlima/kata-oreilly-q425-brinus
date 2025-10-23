@@ -1,9 +1,0 @@
-deployment {
-  dev = environment 'Development' {
-
-  }
-
-  prod = environment 'Production' {
-    
-  }
-}

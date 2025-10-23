@@ -4,7 +4,8 @@ export default defineConfig({
   name: 'likec4-template',
   title: 'LikeC4 Template',
   exclude: [
-    'node_modules/**'
+    'node_modules/**',
+    '**/*.BACKUP.c4'
   ],
   generators: {
     /**

@@ -1,15 +1,15 @@
 views {
-    view ai_analytics of mobiltiy_corp.ai_analytics {
-        title 'AI Analytics / View'
-        description """    
-        # MobilityCorp AI Analytics Services - Container View
+    view ai_systems of mobiltiy_corp.ai_systems {
+        title 'AI Systems / View'
+        description """
+        # MobilityCorp AI Systems - Container View
 
-        This diagram provides a detailed view of the AI Analytics Services within the MobilityCorp system, highlighting its components and interactions.
+        This diagram provides a detailed view of the AI Systems within the MobilityCorp system, including Computer Vision verification and Geo-fence enforcement.
 
         """
 
-        include ai_analytics
-        include ai_analytics.*
+        include ai_systems
+        include ai_systems.*
 
     }
 

@@ -201,43 +201,26 @@ model {
                     -> platform.batch_orchestrator 'Reads'
                 }
 
-                gold_marts = database 'Data Marts (Gold)' {
-                    description """
-
-                    Curated dimensional models for AI, business intelligence, and strategic planning
-
-                    """
-
-                    link ../fleeting_ai/data-marts-gold.md 'Full Documentation'
-
-                    technology 'dbt on ClickHouse/Postgres'
-
-                    -> embed_pipeline 'Generates embeddings' {
-                            title 'Semantic Embedding Generation'
-                            description 'dbt-produced curated marts are transformed into structured markdown or JSON, then embedded for AI retrieval.'
-                            technology 'Python | LlamaIndex / LangChain | Bedrock Titan Embeddings'
-                        }
-                }
+                // Gold layer removed - not needed for current requirements
+                // CV verification uses its own Weaviate Cloud vector DB (see model.cv_verification.c4)
 
             }
 
             batch_orchestrator = container 'Batch Orchestrator' {
                 description """
 
-                Batch Orchestrator - Workflow automation for data pipelines, ML training, and scheduled analytics
+                Batch Orchestrator - Workflow automation for data pipelines, analytics reports, and scheduled tasks
 
                 """
 
                 link ../fleeting_ai/batch-orchestrator.md 'Full Documentation'
 
-                technology 'Airflow/Prefect + dbt'
+                technology 'Airflow/Prefect'
 
-
-                -> data_layers.gold_marts 'Builds curated marts' {
-                        title 'Data Curation with dbt'
-                        description 'Scheduled workflows transform Silver analytical facts into curated dimensional marts for BI and AI.'
-                        technology 'Airflow / Prefect • dbt Core'
-                    }
+                // Orchestrates:
+                // - Map data updates for geo-fence zones (nightly sync)
+                // - Analytics reports generation
+                // - Data cleanup and archival
             }
 
             // Observability (shared)
