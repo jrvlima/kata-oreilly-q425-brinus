@@ -33,11 +33,6 @@ model {
             // - Speed-limited zone control
             // - Wrong-way detection on one-way streets
             // Runs on vehicle edge processors (Raspberry Pi), not in cloud
-
-            // Future AI capabilities could include:
-            // - Demand forecasting (predict vehicle placement needs)
-            // - Predictive maintenance (battery degradation models)
-            // - Customer retention (personalized recommendations)
         }
     }
 }

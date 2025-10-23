@@ -1,0 +1,26 @@
+# Node modules
+node_modules/
+.npm/
+
+# Build outputs
+dist/
+build/
+*.log
+
+# LikeC4 generated files (can be regenerated with: npx likec4 build)
+docs/diagrams/c4/png/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local

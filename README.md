@@ -12,6 +12,7 @@
 | **📄 Overview** | [`docs/OVERVIEW.md`](docs/OVERVIEW.md) | Executive summary of how AI solves MobilityCorp's 3 business challenges |
 | **📋 ADRs** | [`docs/adrs/`](docs/adrs/) | Architecture Decision Records with trade-off analysis |
 | **🎨 C4 Diagrams** | [`docs/diagrams/c4/`](docs/diagrams/c4/) | System architecture at all levels (Context, Container, Component) |
+| **💻 Technical Deep Dive** | [`docs/TECHNICAL_DEEP_DIVE.md`](docs/TECHNICAL_DEEP_DIVE.md) | Implementation details: fixing AI non-determinism & LLM provider abstraction |
 | **📊 Requirements** | [`docs/01_preamble/`](docs/01_preamble/) | Business requirements and technical specifications |
 
 ---
@@ -253,6 +254,20 @@ kata-oreilly-q425-brinus/
 └── qata-description.md                # Competition overview
 ```
 
+### 📐 Generating C4 Diagrams
+
+The C4 diagram source files (`.c4`) are included in the repository. To generate PNG diagrams locally:
+
+```bash
+cd docs/diagrams/c4
+npm install
+npx likec4 build --output png
+```
+
+This will generate 14 PNG diagrams in `docs/diagrams/c4/png/`.
+
+**Note**: PNG files are excluded from git (`.gitignore`) due to file size limits. Source `.c4` files contain all diagram definitions.
+
 ---
 
 ## Key Architecture Decision Records (ADRs)
@@ -378,9 +393,14 @@ Shows how system handles failures, human review, provider failover.
    - CV verification workflows
    - Failure handling & human review
 
-4. **Optional Deep Dive**: Other ADRs and requirement docs in [`docs/`](docs/)
+4. **Technical Implementation** (10 minutes - optional): [`docs/TECHNICAL_DEEP_DIVE.md`](docs/TECHNICAL_DEEP_DIVE.md)
+   - How we fix AI non-determinism (temperature=0, structured outputs, testing)
+   - How LLM provider abstraction works (TypeScript examples, circuit breaker)
+   - Working code showing 5-minute provider switching
 
-**Total Review Time**: ~35 minutes for comprehensive understanding
+5. **Optional Deep Dive**: Other ADRs and requirement docs in [`docs/`](docs/)
+
+**Total Review Time**: ~35-45 minutes for comprehensive understanding
 
 ---
 
