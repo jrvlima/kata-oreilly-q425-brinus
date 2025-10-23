@@ -428,6 +428,9 @@ Our solution demonstrates **architectural maturity**:
 Rafael | Prashant | Khaled | João Vinagre
 
 For detailed technical documentation, see:
-- `/docs/adrs/` - Architecture Decision Records
-- `/docs/diagrams/c4/` - C4 Model diagrams (System Context, Container, Component levels)
-- `/docs/01_preamble/` - Requirements and technical specifications
+- `/docs/adrs/` - Architecture Decision Records (ADR-001, ADR-002, ADR-003)
+- `/docs/diagrams/c4/` - C4 Model diagrams (22 views across System Context, Container, Component levels)
+- `/docs/11_c4_architecture_diagrams.md` - Complete index of all C4 diagrams with descriptions
+- `/docs/13_technical_deep_dive.md` - TypeScript implementation examples and code patterns
+- `/docs/01_business_context.md` through `/docs/10_requirements_traceability.md` - Complete requirements documentation
+- `/docs/14_glossary.md` - Glossary of terms and acronyms

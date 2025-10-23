@@ -12,11 +12,12 @@ This submission includes all required deliverables as specified in the competiti
 | Required Deliverable | Status | Location | Description |
 |---------------------|--------|----------|-------------|
 | **1️⃣ Overview Narrative** | ✅ **Complete** | [`docs/12_overview.md`](docs/12_overview.md) | Comprehensive narrative (18KB) describing how Team BRINUS uses AI to solve MobilityCorp's 3 business challenges |
-| **2️⃣ Architecture Diagrams** | ✅ **Complete** | [`docs/diagrams/c4/src/`](docs/diagrams/c4/src/) | 11 C4 model source files (.c4) providing comprehensive and targeted views for each AI use case |
-| **3️⃣ Architecture Decision Records** | ✅ **Complete** | [`docs/adrs/`](docs/adrs/) | 3 comprehensive ADRs (77KB total) with detailed trade-off analysis for AI-related implementations |
+| **2️⃣ Architecture Diagrams** | ✅ **Complete** | [`docs/diagrams/c4/src/`](docs/diagrams/c4/src/) + [`docs/11_c4_architecture_diagrams.md`](docs/11_c4_architecture_diagrams.md) | 11 C4 model source files generating 22 PNG views with complete index and descriptions |
+| **3️⃣ Architecture Decision Records** | ✅ **Complete** | [`docs/adrs/`](docs/adrs/) | 3 comprehensive ADRs (78KB total) with detailed trade-off analysis for AI-related implementations |
 | **4️⃣ Implementation Details** | ✅ **Complete** (Optional) | [`docs/13_technical_deep_dive.md`](docs/13_technical_deep_dive.md) | Technical implementation guide (28KB) with working TypeScript code examples |
+| **📋 Supporting Documentation** | ✅ **Complete** (Bonus) | [`docs/01-10_*.md`](docs/) + [`docs/14_glossary.md`](docs/14_glossary.md) | Requirements documentation (10 files, 220KB): business context, personas, user journeys, functional/technical/non-functional requirements, constraints, product backlog, traceability matrix, and glossary |
 
-**Total Documentation**: 151KB of comprehensive technical documentation addressing all 6 judging criteria.
+**Total Documentation**: 370KB+ of comprehensive technical documentation addressing all 6 judging criteria.
 
 ---
 
@@ -109,7 +110,7 @@ npm install
 npx likec4 build --output png
 ```
 
-**Output**: 14 PNG diagrams generated in `docs/diagrams/c4/png/`
+**Output**: 22 PNG diagrams generated in `docs/diagrams/c4/png/`
 
 **Build time**: ~10 seconds
 
@@ -268,11 +269,13 @@ npx likec4 serve
 | **Low-Level** (Design) | C4 diagrams (Context, Container, Component) | [`docs/diagrams/c4/src/`](docs/diagrams/c4/src/) |
 | **Implementation** (Code) | TypeScript examples, algorithms, APIs | [`docs/13_technical_deep_dive.md`](docs/13_technical_deep_dive.md) |
 
-**C4 Diagram Coverage** (11 source files, 14 rendered views):
-- System Context (1 view)
-- Container Level (7 views: full system, platform, microservices, telemetry, customer app, staff app, AI systems)
-- Component Level (3 views: CV components, docking flow, damage flow)
-- Scenarios (3 views: provider failover, human review, event-driven flows)
+**C4 Diagram Coverage** (11 source files, 22 rendered views):
+- System Context (1 view: index)
+- Container Level (7 views: full system, platform, microservices, telemetry, customer app, staff app, CV system context)
+- Component Level (4 views: CV containers, CV components, broker, data layers)
+- AI & Analytics (2 views: AI systems, AI analytics)
+- Workflow Views (4 views: CV docking flow, CV damage flow, CV provider failover, CV human review)
+- Data Patterns (4 views: stream processor, fresh availability, burst tolerance, exactly-once projection)
 
 **Evidence**: All documentation, comprehensive across all levels
 
@@ -538,7 +541,7 @@ npm install
 npx likec4 build --output png
 ```
 
-**Output**: 14 PNG files generated in `docs/diagrams/c4/png/`
+**Output**: 22 PNG files generated in `docs/diagrams/c4/png/`
 
 **Build time**: ~10 seconds
 
@@ -552,24 +555,43 @@ npx likec4 serve
 # Interactive diagrams with zoom, pan, navigation
 ```
 
-### Diagrams Generated
+### Diagrams Generated (22 Total)
 
+#### System Context & Overview (Level 1)
 1. **index.png** - System Context View
+
+#### Container & Architecture Views (Level 2)
 2. **full.png** - Full System Container View
 3. **platform.png** - Platform Backbone
 4. **microservices.png** - Microservices Layer
 5. **telemetry.png** - Telemetry Pipeline
 6. **customer_app.png** - Customer Application
 7. **staff_app.png** - Staff Application
-8. **ai_systems.png** - AI Systems
-9. **data_layers.png** - Data Architecture
-10. **fresh_availability.png** - Dynamic: Availability Update
-11. **burst_tolerance.png** - Dynamic: Spike Handling
-12. **exactly_once_projection.png** - Dynamic: Idempotent Processing
-13. **cv_system_context.png** - CV Verification System (generated from views)
-14. **Additional CV views** - Workflows, components, failure scenarios
+8. **cv_system_context.png** - CV Verification System Context
 
-**Note**: PNG files are excluded from git (`.gitignore`) due to file size limits (2.4MB for `full.png`). All diagram definitions are preserved in source `.c4` files.
+#### Component-Level Views (Level 3)
+9. **cv_containers.png** - CV System Components
+10. **cv_components.png** - CV System Internals
+11. **broker.png** - Message Broker Infrastructure
+12. **data_layers.png** - Multi-Tier Data Architecture
+
+#### AI & Analytics
+13. **ai_systems.png** - AI Systems Overview
+14. **ai_analytics.png** - Analytics and ML Systems
+
+#### Workflow & Flow Views
+15. **cv_docking_flow.png** - Docking Verification Workflow
+16. **cv_damage_flow.png** - Damage Detection Workflow
+17. **cv_provider_failover.png** - LLM Provider Failover Handling
+18. **cv_human_review.png** - Human-in-Loop Review Process
+
+#### Data Architecture Patterns
+19. **stream_processor.png** - Stream Processing for Events
+20. **fresh_availability.png** - Real-Time Availability Patterns
+21. **burst_tolerance.png** - Spike/Burst Load Handling
+22. **exactly_once_projection.png** - Exactly-Once Semantics
+
+**Note**: PNG files were previously excluded from git but are now included for competition submission. See `/docs/11_c4_architecture_diagrams.md` for detailed descriptions of each diagram.
 
 ---
 
