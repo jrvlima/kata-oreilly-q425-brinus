@@ -11,10 +11,10 @@ This submission includes all required deliverables as specified in the competiti
 
 | Required Deliverable | Status | Location | Description |
 |---------------------|--------|----------|-------------|
-| **1️⃣ Overview Narrative** | ✅ **Complete** | [`docs/OVERVIEW.md`](docs/OVERVIEW.md) | Comprehensive narrative (18KB) describing how Team BRINUS uses AI to solve MobilityCorp's 3 business challenges |
+| **1️⃣ Overview Narrative** | ✅ **Complete** | [`docs/12_overview.md`](docs/12_overview.md) | Comprehensive narrative (18KB) describing how Team BRINUS uses AI to solve MobilityCorp's 3 business challenges |
 | **2️⃣ Architecture Diagrams** | ✅ **Complete** | [`docs/diagrams/c4/src/`](docs/diagrams/c4/src/) | 11 C4 model source files (.c4) providing comprehensive and targeted views for each AI use case |
 | **3️⃣ Architecture Decision Records** | ✅ **Complete** | [`docs/adrs/`](docs/adrs/) | 3 comprehensive ADRs (77KB total) with detailed trade-off analysis for AI-related implementations |
-| **4️⃣ Implementation Details** | ✅ **Complete** (Optional) | [`docs/TECHNICAL_DEEP_DIVE.md`](docs/TECHNICAL_DEEP_DIVE.md) | Technical implementation guide (28KB) with working TypeScript code examples |
+| **4️⃣ Implementation Details** | ✅ **Complete** (Optional) | [`docs/13_technical_deep_dive.md`](docs/13_technical_deep_dive.md) | Technical implementation guide (28KB) with working TypeScript code examples |
 
 **Total Documentation**: 151KB of comprehensive technical documentation addressing all 6 judging criteria.
 
@@ -26,7 +26,7 @@ This guide walks you through our submission in the optimal order for evaluation.
 
 ### Step 1: Understand the Business Context (10 minutes)
 
-**Read**: [`docs/OVERVIEW.md`](docs/OVERVIEW.md)
+**Read**: [`docs/12_overview.md`](docs/12_overview.md)
 
 **What you'll learn**:
 - MobilityCorp's 3 critical business challenges
@@ -181,7 +181,7 @@ npx likec4 serve
 
 ### Step 5 (Optional): Deep Technical Implementation (10 minutes)
 
-**Read**: [`docs/TECHNICAL_DEEP_DIVE.md`](docs/TECHNICAL_DEEP_DIVE.md)
+**Read**: [`docs/13_technical_deep_dive.md`](docs/13_technical_deep_dive.md)
 
 **What you'll learn**:
 - **Working TypeScript code examples** showing exactly how we:
@@ -253,7 +253,7 @@ npx likec4 serve
 | Fast launch | 9-12 months (model training) | 2 months (pilot deployment) | ✅ Perfect |
 | GDPR compliance | Complex (custom models, data retention) | Built-in (Weaviate EU cluster, no training on data) | ✅ Perfect |
 
-**Evidence**: [`docs/OVERVIEW.md`](docs/OVERVIEW.md) pages 3-4
+**Evidence**: [`docs/12_overview.md`](docs/12_overview.md) pages 3-4
 
 ---
 
@@ -263,10 +263,10 @@ npx likec4 serve
 
 | Level | What We Provide | Where |
 |-------|-----------------|-------|
-| **High-Level** (Business) | Overview narrative, ROI analysis, business challenges | [`docs/OVERVIEW.md`](docs/OVERVIEW.md) |
+| **High-Level** (Business) | Overview narrative, ROI analysis, business challenges | [`docs/12_overview.md`](docs/12_overview.md) |
 | **Mid-Level** (Architecture) | 3 comprehensive ADRs with trade-offs, cost analysis, validation | [`docs/adrs/`](docs/adrs/) |
 | **Low-Level** (Design) | C4 diagrams (Context, Container, Component) | [`docs/diagrams/c4/src/`](docs/diagrams/c4/src/) |
-| **Implementation** (Code) | TypeScript examples, algorithms, APIs | [`docs/TECHNICAL_DEEP_DIVE.md`](docs/TECHNICAL_DEEP_DIVE.md) |
+| **Implementation** (Code) | TypeScript examples, algorithms, APIs | [`docs/13_technical_deep_dive.md`](docs/13_technical_deep_dive.md) |
 
 **C4 Diagram Coverage** (11 source files, 14 rendered views):
 - System Context (1 view)
@@ -345,7 +345,7 @@ Response:
 
 **Evidence**: [`docs/adrs/ADR-002-computer-vision-for-operations.md`](docs/adrs/ADR-002-computer-vision-for-operations.md) lines 820-900
 
-**Implementation**: [`docs/TECHNICAL_DEEP_DIVE.md`](docs/TECHNICAL_DEEP_DIVE.md) Part 2 (LLM Provider Abstraction)
+**Implementation**: [`docs/13_technical_deep_dive.md`](docs/13_technical_deep_dive.md) Part 2 (LLM Provider Abstraction)
 
 ---
 
@@ -455,7 +455,7 @@ Alerts:
 
 **Evidence**:
 - [`docs/adrs/ADR-002-computer-vision-for-operations.md`](docs/adrs/ADR-002-computer-vision-for-operations.md) lines 430-520
-- [`docs/TECHNICAL_DEEP_DIVE.md`](docs/TECHNICAL_DEEP_DIVE.md) Part 1 (Fixing AI Non-Determinism)
+- [`docs/13_technical_deep_dive.md`](docs/13_technical_deep_dive.md) Part 1 (Fixing AI Non-Determinism)
 
 ---
 
@@ -494,8 +494,8 @@ kata-oreilly-q425-brinus/
 ├── .gitignore                         # Excludes generated PNG files
 │
 └── docs/
-    ├── OVERVIEW.md                    # ⭐ Executive summary (18KB)
-    ├── TECHNICAL_DEEP_DIVE.md         # Implementation guide (28KB)
+    ├── 12_overview.md                 # ⭐ Executive summary (18KB)
+    ├── 13_technical_deep_dive.md      # Implementation guide (28KB)
     │
     ├── adrs/                          # Architecture Decision Records
     │   ├── ADR-001-adopt-omf-standards.md              # Foundation (5.1KB)
@@ -604,12 +604,12 @@ npx likec4 serve
 
 Before completing your review, verify all deliverables are accessible:
 
-- [ ] **Overview Narrative**: Read [`docs/OVERVIEW.md`](docs/OVERVIEW.md) ✅
+- [ ] **Overview Narrative**: Read [`docs/12_overview.md`](docs/12_overview.md) ✅
 - [ ] **ADR-001**: Read [`docs/adrs/ADR-001-adopt-omf-standards.md`](docs/adrs/ADR-001-adopt-omf-standards.md) ✅
 - [ ] **ADR-002** (Main): Read [`docs/adrs/ADR-002-computer-vision-for-operations.md`](docs/adrs/ADR-002-computer-vision-for-operations.md) ✅
 - [ ] **ADR-003**: Read [`docs/adrs/ADR-003-geofence-and-wrong-way-detection.md`](docs/adrs/ADR-003-geofence-and-wrong-way-detection.md) ✅
 - [ ] **C4 Diagrams**: Generated PNG files from `.c4` source (run `npx likec4 build`) ✅
-- [ ] **Technical Deep Dive** (Optional): Read [`docs/TECHNICAL_DEEP_DIVE.md`](docs/TECHNICAL_DEEP_DIVE.md) ✅
+- [ ] **Technical Deep Dive** (Optional): Read [`docs/13_technical_deep_dive.md`](docs/13_technical_deep_dive.md) ✅
 
 **All 6 Judging Criteria Addressed**:
 - [x] 1. Innovative Use of Generative AI

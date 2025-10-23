@@ -989,7 +989,7 @@ export class CostTracker {
 ## References
 
 - **ADR-002**: Computer Vision for Operations (comprehensive RAG implementation)
-- **OVERVIEW.md**: Business impact and high-level architecture
+- **12_overview.md**: Business impact and high-level architecture
 - **C4 Diagrams**: `docs/diagrams/c4/src/model.cv_verification.c4` (component view)
 
 **Team BRINUS** | O'Reilly Architectural Katas Q4 2025
