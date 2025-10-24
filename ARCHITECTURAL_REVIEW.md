@@ -243,7 +243,7 @@ This is an **exceptionally well-structured and comprehensive architectural submi
    - Discusses what happens when providers fail
    - **Missing**: What happens when RAG retrieves bad examples?
    - **Missing**: How to detect when vector embeddings drift?
-   - **Missing**: What if Weaviate itself has an outage?
+   - **Missing**: What if Qdrant itself has an outage?
    - **Suggestion**: Add "Failure Mode Analysis" subsection
 
 4. **GDPR Section Placement** (Lines 710-780)
@@ -257,7 +257,7 @@ This is an **exceptionally well-structured and comprehensive architectural submi
 - **YES** - ADR clearly explains:
   - Why custom models don't work for startups (cost, time, expertise)
   - Why RAG is perfect fit (fast, cheap, flexible, no ML needed)
-  - How the system works (Weaviate + multimodal LLM + provider abstraction)
+  - How the system works (Qdrant + multimodal LLM + provider abstraction)
   - How reliability is ensured (7-layer validation)
   - How uncertainty is handled (multi-provider, circuit breaker, fallback)
   - What the trade-offs are (API costs, provider dependence)
@@ -459,7 +459,7 @@ This is an **exceptionally well-structured and comprehensive architectural submi
 
 3. **References Section Minimal** (Lines 989-993)
    - Only 3 bullet points
-   - **Missing**: Links to external resources (Weaviate docs, LLM API docs, etc.)
+   - **Missing**: Links to external resources (Qdrant docs, LLM API docs, etc.)
    - **Suggestion**: Add "Further Reading" with 10-15 external references
 
 #### 🎯 Communication Effectiveness
@@ -471,7 +471,7 @@ This is an **exceptionally well-structured and comprehensive architectural submi
   - Error handling shown
   - Configuration approach clear
 - **With some gaps** - would need to:
-  - Figure out Weaviate integration (not covered in detail)
+  - Figure out Qdrant integration (not covered in detail)
   - Design database schema (not shown)
   - Handle edge cases (partially covered)
 

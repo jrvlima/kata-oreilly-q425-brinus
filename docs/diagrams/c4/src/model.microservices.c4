@@ -23,7 +23,66 @@ model {
 
                 """
 
+                style {
+                    icon tech:spring 
+                }
+
+                technology 'Java + Spring Boot'
+
                 booking_service_database = database 'Booking Service Database' {
+                    description """
+                    Booking Service Database
+
+                    The booking service database stores all data related to customer bookings, including reservation details, payment information, and vehicle availability.
+
+                    """
+
+                }
+            }
+
+            photo_service = service 'Photo Service' {
+                description """
+                    Booking Service
+
+                    The booking service is responsible for managing customer bookings of vehicles. It handles availability, reservations, and payment processing.
+
+                """
+
+                style {
+                    icon tech:nodejs 
+                }
+
+                technology 'NodeJs + Express + TypeScript'
+
+                photo_controller = component 'Photo Controller' {
+                    description 'Handles photo upload requests from mobile app'
+                    technology 'Express.js REST API'
+
+                    -> photo_bussiness_logic 'Invokes business logic'
+                }
+
+                photo_bussiness_logic = component 'Photo Service' {
+                    description 'Business logic for photo validation and processing'
+                    technology 'TypeScript'
+
+                    -> mobiltiy_corp.platform.message_broker.queues.topic_domain_events
+                        'Publishes PhotoStored' {
+                        title 'Domain Event'
+                        description 'Notify that a photo was received + metadata persisted; bytes are in object store.'
+                        technology 'Kafka • CloudEvents • Avro/JSON'
+                    }
+                }
+
+                photo_preprocessing = component 'Photo Preprocessing' {
+                    description 'Resizes, compresses, blurs faces/plates (GDPR)'
+                    technology 'Sharp.js + OpenCV'
+
+                    -> platform.data_layers.object_store_bronze 'Stores verification photos' {
+                        technology 'S3/MinIO bucket: photos/ (90-day retention)'
+                    }
+                }
+
+                photo_service_database = database 'Photo Service Database' {
                     description """
                     Booking Service Database
 
@@ -41,6 +100,12 @@ model {
                 The customer service manages customer profiles, preferences, and authentication.
 
                 """
+
+                style {
+                    icon tech:spring 
+                }
+
+                technology 'Java + Spring Boot'
 
                 customer_management_service_database = database 'Customer Management Service Database' {
                     description """
@@ -65,6 +130,12 @@ model {
 
                 """
 
+                style {
+                    icon tech:nodejs 
+                }
+
+                technology 'NodeJs + Express + TypeScript'
+
                 return_service_database = database 'Return Service Database' {
                     description """
                     
@@ -83,6 +154,12 @@ model {
                 The payment service processes all financial transactions, including customer payments, refunds, and invoicing.
 
                 """
+
+                style {
+                    icon tech:spring 
+                }
+
+                technology 'Java + Spring Boot'
 
                 payment_service_database = database 'Payment Service Database' {
                     description """
@@ -103,6 +180,12 @@ model {
 
                 """
 
+                style {
+                    icon tech:spring 
+                }
+
+                technology 'Java + Spring Boot'
+
                 bay_management_service_database = database 'Bay Management Service Database' {
                     description """
                     # Bay Management Service Database
@@ -121,6 +204,12 @@ model {
                 This service manages the logistics of charging and distributing electric bikes and scooters to ensure they are available for customers.
 
                 """
+
+                style {
+                    icon tech:spring 
+                }
+
+                technology 'Java + Spring Boot'
 
                 bike_scooter_charging_distribution_service_database = database 'Bike/Scooter Charging & Distribution Service Database' {
                     description """
@@ -141,6 +230,12 @@ model {
 
                 """
 
+                style {
+                    icon tech:spring 
+                }
+
+                technology 'Java + Spring Boot'
+
                 veihcles_fleet_management_service_database = database 'Vehicles Fleet Management Service Database' {
                     description """
                     # Vehicles Fleet Management Service Database
@@ -158,6 +253,12 @@ model {
                 The vehicles tracking service provides real-time location tracking of all vehicles in the fleet, enabling efficient management and customer support.
 
                 """
+
+                style {
+                    icon tech:nodejs 
+                }
+
+                technology 'NodeJs + Express + TypeScript'
 
                 veihcles_tracking_service_database = database 'Vehicles Tracking Service Database' {
                     description """
@@ -177,6 +278,12 @@ model {
                 The telemetry service collects and analyzes data from vehicles to monitor performance, usage patterns, and detect potential issues.
 
                 """
+
+                style {
+                    icon tech:nodejs 
+                }
+
+                technology 'NodeJs + Express + TypeScript'
 
                 telemetry_service_database = database 'Telemetry Service Database' {
                     description """

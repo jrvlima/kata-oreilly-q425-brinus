@@ -25,21 +25,21 @@ model {
 
                 technology 'Kafka'
 
-                
+
 
                 durable_logs = component 'Durable Logs' {
                     description """
-                    
+
                     Durable, partitioned, replicated logs for high-throughput event streaming.
-                    
+
                     """
 
                 }
 
                 queues = container 'Queues' {
                     description """
-                    
-                    Topic partitions exposed as queues for scalable consumption.
+
+Topic partitions exposed as queues for scalable consumption.
                     
                     """
 
@@ -52,44 +52,73 @@ model {
                     topic_raw_events = queue 'veh.events.raw' {
                         description """
                         
-                        # Raw normalized device events (CloudEvents).
-                        
-                        """
+                    # Raw normalized device events (CloudEvents).
 
-                        -> object_store_bronze 'Archived telemetry snapshots' {
-                                title 'Telemetry Archive'
-                                description 'Raw IoT telemetry (GPS, battery, faults) stored in object store for reprocessing and model training.'
-                                technology 'Kafka Connect S3 Sink | Parquet/JSON'
-                            }
-                    }
-                    topic_inventory_updates = queue 'veh.inventory.updates' {
-                        description """
-                        
-                        # Derived inventory/availability events.
-                        
-                        """
-                    }
-                    topic_alerts = queue 'alerts' {
-                        description """
-                        
-                        # Alerts (low_battery, geofence, faults).
-                        
-                        """
-                    }
-                    topic_domain_events = queue 'domain.events' {
-                        description """
-                        
-                        # Business events from microservices (booking_created, payment_authorized, return_completed, etc.).
-                        
-                        """
+                    """
 
-                        -> data_layers.object_store_bronze 'Sink for replay and ML' {
-                                title 'Immutable Event Archive'
-                                description 'Kafka Connect sink writes raw business events to S3/MinIO in partitioned folders for replay, audit, and ML training.'
-                                technology 'Kafka Connect S3 Sink | Parquet/Avro'
-                            }
-                        -> platform.stream_processor.flink_jobs 'Consumes'
+                    -> object_store_bronze 'Archived telemetry snapshots' {
+                            title 'Telemetry Archive'
+                            description 'Raw IoT telemetry (GPS, battery, faults) stored in object store for reprocessing and model training.'
+                            technology 'Kafka Connect S3 Sink | Parquet/JSON'
+                        }
+                }
+                topic_inventory_updates = queue 'veh.inventory.updates' {
+                    description """
+
+                    # Derived inventory/availability events.
+
+                    """
+                }
+                topic_alerts = queue 'alerts' {
+                    description """
+
+                    # Alerts (low_battery, geofence, faults).
+
+                    """
+                }
+                topic_cv_photostored   = queue 'cv.photo.stored' {
+                    description '# Emitted by Photo Service outbox after metadata saved (URIs only, no bytes).'
+
+                    -> stream_processor.cv_preprocessing 'Consumes'
+                }
+                topic_cv_preprocessed  = queue 'cv.photo.preprocessed' {
+                    description '# Emitted after blur/resize/AV scan; includes s3_uri_silver + checksums.'
+                    -> stream_processor.cv_orchestrator 'Consumes'
+                }
+                topic_cv_decision      = queue 'cv.photo.decision' {
+                    description '# PASS/FAIL/REVIEW + confidence + reasons; consumed by Booking/Return/Ops.'
+                    -> mobiltiy_corp.microservices.booking_service 'Consumes CVDecision' {
+                        title 'Associate & advance state'
+                        description 'Update booking with ReturnProof{Accepted|Rejected} idempotently; store decision history.'
                     }
+
+                    -> mobiltiy_corp.microservices.return_service 'Consumes CVDecision' {
+                        title 'Return workflow'
+                        description 'Triggers downstream billing/fees, holds, or notifications depending on decision.'
+                    }
+                }
+                topic_cv_human_override = queue 'cv.photo.human_override' {
+                    description '# Ops tool approvals/rejections; closes the loop and updates history.'
+
+                    -> mobiltiy_corp.applications.staff_app 'Publishes overrides' {
+                        title 'Ops Review'
+                        description 'Staff approves/rejects REVIEW cases; feeds back into decision history.'
+                    }
+                }
+                topic_domain_events = queue 'domain.events' {
+                    description """
+
+                    # Business events from microservices (booking_created, payment_authorized, return_completed, etc.).
+
+                    """
+
+                    -> data_layers.object_store_bronze 'Sink for replay and ML' {
+                            title 'Immutable Event Archive'
+                            description 'Kafka Connect sink writes raw business events to S3/MinIO in partitioned folders for replay, audit, and ML training.'
+                            technology 'Kafka Connect S3 Sink | Parquet/Avro'
+                        }
+                    -> platform.stream_processor.flink_jobs 'Consumes'
+}
                 
                 }
 
@@ -108,9 +137,9 @@ model {
                     flink_jobs = component 'Flink/ksqlDB Jobs' {
                       technology 'Flink / ksqlDB'
                       description """
-                      
+
                       Stateful joins, windows, enrichment.
-                      
+
                       """
 
                       -> queues.topic_inventory_updates 'Publishes'
@@ -121,7 +150,30 @@ model {
                             technology 'Flink / ksqlDB / Kafka Streams → ClickHouse / TimescaleDB'
                         }
                       -> read_model_db 'Updates projections'
-                      
+
+                    }
+
+                    cv_preprocessing = component 'CV Preprocessing' {
+                        technology 'Flink / ksqlDB'
+                        description 'Blur faces/plates, resize, virus scan; write silver; emit PhotoPreprocessed'
+
+                        
+                        -> mobiltiy_corp.platform.data_layers.object_store_bronze 'Writes raw copy'
+                        -> mobiltiy_corp.platform.data_layers.object_store_bronze 'Writes silver copy' {
+                            title 'Silver (processed)'
+                            description 'Blurred/resized image artifact; PII minimized.'
+                        }
+                        -> queues.topic_cv_preprocessed 'Publishes'
+                    }
+
+                    cv_orchestrator = component 'CV Orchestrator' {
+                        technology 'Flink / Kafka Streams'
+                        description 'Calls CV Decision Service with s3_uri_silver; emits CVDecision with thresholds'
+
+
+                        -> ai_systems.rag_api.cv_decision_endpoint 'Requests decision' { technology 'HTTP/gRPC' }
+                        -> queues.topic_cv_decision 'Publish CVDecision'
+                        -> queues.topic_cv_human_override 'Optionally awaits override (saga/halt on REVIEW)'
                     }
 
                     ksqldb_pipelines = component 'ksqlDB Pipelines' {
@@ -131,6 +183,11 @@ model {
 
                     queues.topic_raw_events -> flink_jobs 'Consumes'
                     queues.topic_domain_events -> flink_jobs 'Consumes'
+
+                    -> queues.topic_cv_photostored 'Routes PhotoStored' {
+                        description 'Small stream job that filters PhotoStored events from domain.events into cv.photo.stored'
+                        technology 'Flink / ksqlDB'
+                    }
                 }
 
             }
@@ -177,6 +234,11 @@ model {
 
                     Object Store (Bronze Layer) - Immutable raw event archive for replay, audit, and ML training
 
+                    Stores:
+                    - Raw IoT telemetry (Kafka Connect sink from veh.events.raw)
+                    - Business domain events (Kafka Connect sink from domain.events)
+                    - CV verification photos (cv-photos/ bucket, 90-day retention)
+
                     """
 
                     link ../fleeting_ai/object-store-bronze.md 'Full Documentation'
@@ -202,7 +264,24 @@ model {
                 }
 
                 // Gold layer removed - not needed for current requirements
-                // CV verification uses its own Weaviate Cloud vector DB (see model.cv_verification.c4)
+                // CV verification uses its own Qdrant vector DB (see model.cv_verification.c4)
+                gold_marts = database 'Data Marts (Gold)' {
+                    description """
+
+                    Curated dimensional models for AI, business intelligence, and strategic planning
+
+                    """
+
+                    link ../fleeting_ai/data-marts-gold.md 'Full Documentation'
+
+                    technology 'dbt on ClickHouse/Postgres'
+
+                    -> embed_pipeline 'Generates embeddings' {
+                            title 'Semantic Embedding Generation'
+                            description 'dbt-produced curated marts are transformed into structured markdown or JSON, then embedded for AI retrieval.'
+                            technology 'Python | LlamaIndex / LangChain | Bedrock Titan Embeddings'
+                        }
+                }
 
             }
 
@@ -221,6 +300,39 @@ model {
                 // - Map data updates for geo-fence zones (nightly sync)
                 // - Analytics reports generation
                 // - Data cleanup and archival
+
+                -> ai_systems.rag_api.cv_decision_endpoint 'Nightly evals & drift checks' {
+                    description 'Run synthetic and sampled real cases; write metrics; flip provider if SLA/cost breach.'
+                }
+
+                -> platform.message_broker.queues.topic_cv_decision 'Publishes re-scored decisions (vNext)' {
+                    description 'Backfill/re-evaluate with new prompt_version; emit v2 events and update history.'
+                }
+
+                -> data_layers.timeseries_olap_db 'Reads analytical facts'
+                -> data_layers.object_store_bronze 'Reads raw events'
+                -> data_layers.gold_marts 'Writes curated marts'
+            }
+
+            litellm_proxy = container 'LiteLLM Proxy' {
+                description """
+
+                LiteLLM Proxy - Centralized gateway for lightweight LLM inference requests
+
+                """
+
+                link ../fleeting_ai/litellm-proxy.md 'Full Documentation'
+
+                technology 'FastAPI + Python'
+
+                style {
+                    icon tech:python 
+                }
+
+                -> aws_bedrock_ai 'Forwards requests to' 'REST API'
+                -> gpc_vertex_ai 'Forwards requests to' 'REST API'
+                -> azure_open_ai 'Forwards requests to' 'REST API'
+
             }
 
             // Observability (shared)

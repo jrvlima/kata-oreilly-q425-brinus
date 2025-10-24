@@ -1,5 +1,16 @@
 views {
 
+    /**
+     * @likec4-generated(v1)
+     * iKRoYXNo2ShlMzBiMTYwYzFkNzg0ZTA3MjgyNDQyNzZlNzlhYTYyNDZhZjdlNTY3qmF1dG9MYXlvdXSBqWRpcmVjdGlvbqJUQqF4DKF5AKV3aWR0aM0HuqZoZWlnaHTNB+Wlbm9kZXPeABGoY3VzdG9tZXKCoWKUzQO/AM0BSMy0oWPCs21vYmlsdGl5X2NvcnBfc3RhZmaCoWKUzQIBAM0BT8y0oWPCsnZlaGljbGVfQmF5X2RldmljZYKhYpRKAM0BQMy0oWPCpG1hYXOCoWKUzQWFzQFMzQF5zLShY8Kjb21mgqFilM0Dyc0BTM0BTcy0oWPCrW1vYmlsdGl5X2NvcnCCoWKUG80BGs0Dcc0GQqFjw61henVyZV9vcGVuX2FpgqFilM0ELc0FBM0BX8y0oWPCrmF3c19iZWRyb2NrX2FpgqFilM0EL80DxM0BUMy0oWPCrWdwY192ZXJ0ZXhfYWmCoWKUzQRFzQY1zQFQzLShY8Kn
+     * b3Blbl9haYKhYpTNBnbNBdjNAVDMtKFjwqxhbnRocm9waWNfYWmCoWKUzQZzzQRYzQFQzLShY8K6bW9iaWx0aXlfY29ycC5hcHBsaWNhdGlvbnOCoWKUzQIJzQFMzQFSzLShY8LZIW1vYmlsdGl5X2NvcnAuZWRnZV9pbmdlc3RfZ2F0ZXdheYKhYpRDzQFMzQFNzLShY8K5bW9iaWx0aXlfY29ycC5hcGlfZ2F0ZXdheYKhYpTNAiLNAo/NAULMtKFjwrttb2JpbHRpeV9jb3JwLm1pY3Jvc2VydmljZXOCoWKUzKDNA9LNAWTMtKFjwrZtb2JpbHRpeV9jb3JwLnBsYXRmb3JtgqFilM0B980FKc0BUcy0oWPCuG1vYmlsdGl5X2NvcnAuYWlfc3lzdGVtc4KhYpTNAaLNBoDNAWLMtKFjwqVlZGdlc94AF6ZzbTd3YzmCoWyEoXjLQIx0AAAAAAChecz9pXdpZHRoJKZoZWlnaHQS
+     * oXCUks0D7sy0ks0Ds8zhks0Da80BGJLNAy/NAUanMWFmeW12b4KhbISheMtAhWwAAAAAAKF5zPuld2lkdGgkpmhlaWdodBKhcJSSzQKrzLSSzQKtzOCSzQKuzQEVks0Cr80BQqZld3M0bDOCoWyEoXjM6qF5zPuld2lkdGh+pmhlaWdodBKhcJSSzOrMtJLM6szgkszqzQEVkszqzQFCpzFwempiejCCoWyEoXjLQIXUAAAAAAChectAghQAAAAAAKV3aWR0aCSmaGVpZ2h0EqFwlJLNArfNAgCSzQK5zQIpks0CvM0CWpLNAr7NAoWnMXA1MGxmcoKhbISheMtAcdgAAAAAAKF5y0CHHAAAAAAApXdpZHRoWqZoZWlnaHQSoXCUksz4zQIAks0BDM0Cd5LNAS7NA0uSzQFCzQPHpnNtdDJveIKhbISheMtAgHQAAAAAAKF5zQOHpXdpZHRoeqZoZWlnaHQSoXCUks0CXc0DQ5LNAizN
+     * A22SzQHyzQOgks0BwM0Dy6ZyZjhldWuCoWyEoXjLQFNgAAAAAAChectAkJ4AAAAAAKV3aWR0aBmmaGVpZ2h0EqFwl5LMu80CAJJ4zQKOkgzNA6qSac0EhpLMqM0FG5LNAWDNBViSzQHtzQVwpzFpdDF3cXmCoWyEoXjNAumhec0EMqV3aWR0aMyCpmhlaWdodBKhcJeSzQLUzQNDks0C5M0DqpLNAvfNBFmSzQLbzQTtks0C2M0E/ZLNAtPNBQ+SzQLNzQUfpmkxZTFhOYKhbISheMtAfXgAAAAAAKF5zQTYpXdpZHRozNemaGVpZ2h0KKFwl5LNAZPNBIWSzQGtzQSnks0BzM0EzZLNAevNBO2SzQH9zQT/ks0CEc0FEZLNAiXNBSKnMWJ6ajR4dIKhbISheMtAc/gAAAAAAKF5y0CUvgAAAAAApXdpZHRozLCmaGVpZ2h0EqFwl5LNAffNBXSSzQGczQVjks0BM80FPpLM+s0E7ZLM
+     * 5s0E0JLM7c0ErpLM/s0EjqVwdGM1MIKhbISheMtAg9QAAAAAAKF5y0CYpgAAAAAApXdpZHRozMKmaGVpZ2h0J6FwlJLNAozNBd2SzQKBzQYMks0CdM0GRZLNAmnNBnanMW1rOGI1Z4KhbISheMtAgcwAAAAAAKF5y0CYwgAAAAAApXdpZHRoGaZoZWlnaHQSoXCXks0CPM0GgJLNAjbNBl+SzQI1zQY6ks0CP80GGZLNAkTNBgeSzQJMzQX2ks0CVc0F5qZkOWF5bHiCoWyEoXjNBHqhec0CTKV3aWR0aF+maGVpZ2h0EqFwl5LNBYXNAeySzQVzzQHzks0FYM0B+pLNBU7NAgCSzQSrzQI7ks0D8c0CfZLNA27NAqumbmFxZTI3gqFshKF4y0CM7AAAAAAAoXnLQIIkAAAAAACld2lkdGhopmhlaWdodBKhcJSSzQP5zQIAks0DwM0CK5LNA3zNAl6SzQNCzQKJpzF2Y2gxMm2DomNw
+     * kYKheMtAjHszMzMzM6F5y0CVt+lNl30ZoWyEoXjLQI3cAAAAAAChectAlbIAAAAAAKV3aWR0aMyIpmhlaWdodBKhcJeSzQNJzQW/ks0DlM0F2pLNA+3NBfuSzQQ9zQYZks0Eoc0GPpLNBQ/NBmqSzQVpzQaOpnVybGhjY4OiY3CRgqF4y0CXPgAAAAAAoXnLQJbmX43nwUChbISheM0F/6F5zQXNpXdpZHRoTqZoZWlnaHQSoXCXks0GQc0HNJLNBk3NB1CSzQZczQdtks0Gbc0Hh5LNBnnNB5mSzQaIzQerks0Gl80HvKZqNTYwZ2ODomNwkYKheMtAl15mZmZmZqF5y0CUOf4ZQq6moWyEoXjLQJgCAAAAAAChec0FA6V3aWR0aE6maGVpZ2h0EqFwlJLNBeTNBzSSzQXHzQdeks0FpM0HkJLNBYbNB7umeGFicjY4g6JjcJGCoXjLQIwX0KwZ0KyhectAk8+ZmZmZmqFshKF4y0CN
+     * 3AAAAAAAoXnLQJNCAAAAAACld2lkdGjMiKZoZWlnaHQSoXCXks0DSc0FoJLNBCjNBciSzQW7zQYXks0HCc0GgJLNBxjNBoWSzQcnzQaKks0HNs0Gj6ZhMHhkcXGDomNwkYKheMtAloSmMK6VZ6F5y0CTmszMzMzNoWyEoXjLQJe+AAAAAAChec0FLaV3aWR0aE6maGVpZ2h0EqFwl5LNB8XNBzSSzQe5zQdQks0Hqc0HbZLNB5fNB4eSzQeKzQeZks0He80Hq5LNB2zNB7unMTRyMXk2cYOiY3CRgqF4y0CXIMzMzMzNoXnLQJF2gfErboahbISheM0F+aF5y0CRqgAAAAAApXdpZHRoTqZoZWlnaHQSoXCaks0HZ80HNJLNBzrNB1GSzQcGzQdvks0G1M0Hh5LNBonNB6qSzQZwzQemks0GIs0Hw5LNBhPNB8iSzQYEzQfOks0F9M0H1KcxZjhyamt2g6JjcJGCoXjLQIyfMzMzMzOh
+     * ectAl+tDs74qTKFshKF4y0CONAAAAAAAoXnLQJhOAAAAAACld2lkdGjMiKZoZWlnaHQSoXCUks0DFM0F3ZLNA1PNBg2SzQOgzQZJks0D4M0GeqcxNDd0NWE1g6JjcJGCoXjLQJc+AAAAAAChectAmep/Rt68BqFshKF4y0CYDgAAAAAAoXnLQJnKAAAAAACld2lkdGhOpmhlaWdodBKhcJqSzQTAzQc0ks0E5s0HUpLNBRPNB3GSzQVAzQeHks0Fnc0HtJLNBb/NB6KSzQYhzQfDks0GMM0HyJLNBkDNB82SzQZPzQfTpnN0cDY1OYOiY3CRgqF4y0CW9JX3EY0joXnLQJewZmZmZmahbISheMtAmEIAAAAAAKF5zQWipXdpZHRoTqZoZWlnaHQSoXCXks0EI80HNJLNBBjNB0+SzQQVzQdtks0EJM0Hh5LNBD3NB7CSzQRmzQfOks0EkM0H5Q==
+     */
     view index of mobiltiy_corp {
 
         title 'MobilityCorp / C4 / System Context View'
@@ -31,42 +42,13 @@ views {
         include maas
         include omf
 
-    }
+        include open_ai
+        include anthropic_ai
 
-    view full of mobiltiy_corp {
-        title 'MobilityCorp / C4 / Full System Context View'
-        description """
-        # MobilityCorp System Context View
+        include azure_open_ai
+        include aws_bedrock_ai
+        include gpc_vertex_ai
 
-        This diagram provides an overview of the MobilityCorp system and its interactions with external actors and systems.
-
-        """
-
-        include customer
-        include mobiltiy_corp_staff
-
-        include vehicle_Bay_device
-
-        include mobiltiy_corp
-
-        include applications
-        include applications.*
-
-        include api_gateway
-        include edge_ingest_gateway
-
-        include microservices
-        include microservices.*
-
-
-        include platform
-        include platform.*
-
-        include ai_systems
-        include ai_systems.*
-
-        include maas
-        include omf
     }
 
     view telemetry of mobiltiy_corp {

@@ -65,7 +65,7 @@ This is our **most comprehensive ADR** (46KB, 1,161 lines) and addresses **all 6
 #### ✅ Judging Criterion #2: Suitability Given Constraints
 - Startup-friendly: No ML engineers needed
 - Fast time-to-market: 2-month pilot deployment
-- Predictable costs: $95/mo Weaviate + ~$23K/mo LLM APIs
+- Predictable costs: Qdrant + ~€21.9K/mo LLM APIs
 - GDPR-compliant: EU data residency, face blurring, 90-day retention
 
 #### ✅ Judging Criterion #4: Dealing with Uncertainty in AI Technology
@@ -219,7 +219,7 @@ npx likec4 serve
 
 1. **RAG-First Approach** (Most Innovative)
    - Industry norm: Build custom fine-tuned models (YOLOv8, Mask R-CNN)
-   - Our approach: Use pre-trained multimodal LLMs + RAG (Weaviate Cloud)
+   - Our approach: Use pre-trained multimodal LLMs + RAG (Qdrant)
    - Why innovative: Proves RAG can match/exceed custom model accuracy for startups
    - Result: 2 months to production vs 12+ months, €280K vs €600K+
 
@@ -256,10 +256,10 @@ npx likec4 serve
 
 | Constraint | Traditional Approach | Our RAG Approach | Fit |
 |------------|---------------------|------------------|-----|
-| No ML engineers | Hire 2-3 ML engineers ($450K+/year) | Just developers writing prompts | ✅ Perfect |
-| Predictable costs | GPU infrastructure ($5-10K/mo) | $95/mo Weaviate + $23K/mo LLM APIs | ✅ Perfect |
+| No ML engineers | Hire 2-3 ML engineers (€428K+/year) | Just developers writing prompts | ✅ Perfect |
+| Predictable costs | GPU infrastructure (€4.8-9.5K/mo) | Qdrant + €21.9K/mo LLM APIs | ✅ Perfect |
 | Fast launch | 9-12 months (model training) | 2 months (pilot deployment) | ✅ Perfect |
-| GDPR compliance | Complex (custom models, data retention) | Built-in (Weaviate EU cluster, no training on data) | ✅ Perfect |
+| GDPR compliance | Complex (custom models, data retention) | Built-in (Qdrant EU cluster, no training on data) | ✅ Perfect |
 
 **Evidence**: [`docs/12_overview.md`](docs/12_overview.md) pages 3-4
 
@@ -442,7 +442,7 @@ Only promote v1.1 if metrics improve
 
 #### Layer 6: Ground Truth Feedback Loop
 ```
-Human overrides → Store in Weaviate RAG → Improve future decisions
+Human overrides → Store in Qdrant RAG → Improve future decisions
 Every dispute becomes training data
 Continuous improvement without model retraining
 ```
@@ -624,7 +624,7 @@ npx likec4 serve
 - [ADR Template](https://github.com/joelparkerhenderson/architecture-decision-record) - Decision record format
 - [OpenAI GPT-4V](https://platform.openai.com/docs/guides/vision) - Multimodal LLM API
 - [Anthropic Claude](https://docs.anthropic.com/claude/docs) - Alternative multimodal LLM
-- [Weaviate](https://weaviate.io/) - Vector database for RAG
+- [Qdrant](https://qdrant.tech/) - Vector database for RAG
 - [Open Mobility Foundation](https://www.openmobilityfoundation.org/) - MDS/CDS standards
 
 ---

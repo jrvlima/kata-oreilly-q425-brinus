@@ -14,6 +14,93 @@ model {
 
     }
 
+    open_ai = external-system 'OpenAI API' {
+        description 'Enterprise LLM provider with SLA and global data residency'
+
+        open_ai_llms = container 'OpenAI LLMs' {
+            description 'OpenAI LLM offerings'
+
+            gpt_4 = component 'GPT-4' {
+                description 'GPT-4 - Advanced multimodal LLM supporting text and image inputs'
+            }
+
+            gpt_5 = component 'GPT-5' {
+                description 'GPT-5 - Next-generation multimodal LLM with enhanced reasoning capabilities'
+            }
+        }
+
+        open_ai_embeddings = container 'OpenAI Embeddings' {
+            description 'OpenAI Embeddings - High-quality text embeddings for semantic search and retrieval tasks'
+
+            ada_embedding = component 'Ada Embedding' {
+                description 'Ada Embedding - Efficient text embedding model for various NLP applications'
+            }
+        }
+    }
+
+    anthropic_ai = external-system 'Anthropic AI API' {
+        description 'Enterprise LLM provider with SLA and global data residency'
+
+        anthropic_llms = group 'Anthropic LLMs' {
+            description 'Anthropic LLM offerings'
+
+            claude_3 = component 'Claude 3' {
+                description 'Claude 3 - Advanced multimodal LLM supporting text and image inputs'
+            }
+
+            sonnet = component 'Sonnet' {
+                description 'Sonnet - Enhanced multimodal LLM with improved contextual understanding'
+            }
+        }
+
+        anthropic_embeddings = container 'Anthropic Embeddings' {
+            description 'Anthropic Embeddings - High-quality text embeddings for semantic search and retrieval tasks'
+
+            cl100k_embedding = component 'cl100k Embedding' {
+                description 'cl100k Embedding - Efficient text embedding model for various NLP applications'
+            }
+        }
+       
+    }
+
+    azure_open_ai = external-system 'Azure OpenAI' {
+        description 'Enterprise LLM provider with SLA and EU data residency'
+        azure_open_ai_llms = group 'Azure OpenAI LLMs' {
+            description 'Azure OpenAI LLM offerings'
+
+            -> open_ai.open_ai_llms.gpt_4 'Powered by'
+            -> open_ai.open_ai_llms.gpt_5 'Powered by'
+            -> anthropic_ai.anthropic_llms.claude_3 'Powered by'
+            -> anthropic_ai.anthropic_llms.sonnet 'Powered by'
+            -> open_ai.open_ai_embeddings.ada_embedding 'Powered by'
+            -> anthropic_ai.anthropic_embeddings.cl100k_embedding 'Powered by'
+        }
+    }
+
+    aws_bedrock_ai = external-system 'AWS Bedrock AI' {
+        description 'Enterprise LLM provider with SLA and global data residency'
+
+        -> open_ai.open_ai_llms.gpt_4 'Powered by'
+        -> open_ai.open_ai_llms.gpt_5 'Powered by'
+        -> anthropic_ai.anthropic_llms.claude_3 'Powered by'
+        -> anthropic_ai.anthropic_llms.sonnet 'Powered by'
+        -> open_ai.open_ai_embeddings.ada_embedding 'Powered by'
+        -> anthropic_ai.anthropic_embeddings.cl100k_embedding 'Powered by'
+    }
+
+    gpc_vertex_ai = external-system 'GPC Vertex AI' {
+        description 'Enterprise LLM provider with SLA and global data residency'
+
+        -> open_ai.open_ai_llms.gpt_4 'Powered by'
+        -> open_ai.open_ai_llms.gpt_5 'Powered by'
+        -> anthropic_ai.anthropic_llms.claude_3 'Powered by'
+        -> anthropic_ai.anthropic_llms.sonnet 'Powered by'
+        -> open_ai.open_ai_embeddings.ada_embedding 'Powered by'
+        -> anthropic_ai.anthropic_embeddings.cl100k_embedding 'Powered by'
+    }
+
+    
+
     customer = actor 'Customer' {
         
         description "Customers use the MobilityCorp platform to find, book, and manage vehicle rentals for their transportation needs."

@@ -37,7 +37,7 @@ We don't use AI to predict demand (too uncertain, unreliable). Instead, we use *
 
 1. **Docking Verification AI** (eBikes/Scooters)
    - User submits photo at return → AI verifies docking pins inserted + charging light ON
-   - Weaviate RAG retrieves 5 similar past cases → LLM analyzes with context
+   - Qdrant RAG retrieves 5 similar past cases → LLM analyzes with context
    - **Result**: 95% auto-approval, 3-second decision, €5.2M/year savings vs manual review
 
 2. **Damage Detection AI** (All Vehicles)
@@ -150,8 +150,8 @@ We **deliberately chose NOT to use AI** for customer engagement because:
 **Architecture**:
 ```
 User Photo → Pre-processing (blur faces, resize)
-  → Weaviate Cloud (RAG: retrieve 5 similar cases)
-  → LLM Abstraction Layer (OpenAI/Claude/Azure)
+  → Qdrant (RAG: retrieve 5 similar cases)
+  → LiteLLM Proxy (OpenAI/Claude/Azure)
   → Decision (PASS/FAIL) + Explanation
 ```
 
@@ -164,11 +164,12 @@ Automatic Fallback:
 OpenAI (primary) → Claude (fallback) → Azure (enterprise) → Self-hosted (disaster recovery)
 ```
 
-**Why Weaviate Cloud?**
-- $95/mo handles 3.6M photos/month (vs Pinecone $500+/mo)
+**Why Qdrant?**
+- Cost-effective at scale for 3.6M photos/month
 - Native multimodal support (image embeddings, not just text)
 - Open-source escape hatch (can self-host later, avoid lock-in)
 - EU data residency (GDPR compliance)
+- High-performance Rust implementation with superior query speed
 
 **Validation & Verification** (Critical Judging Criterion):
 1. **Temperature=0**: Forces deterministic outputs (same photo = same result 99.9%)
@@ -179,7 +180,7 @@ OpenAI (primary) → Claude (fallback) → Azure (enterprise) → Self-hosted (d
 6. **Ground truth feedback loop**: Every human override becomes training data
 
 **Privacy & GDPR**:
-- Weaviate does NOT train on customer data (isolated clusters, encrypted)
+- Qdrant does NOT train on customer data (isolated clusters, encrypted)
 - LLM Enterprise APIs have zero data retention (OpenAI, Claude, Azure)
 - Face/license plate blurring (OpenCV pre-processing)
 - 90-day retention → archive → 7-year deletion (GDPR Article 17)
@@ -195,7 +196,7 @@ OpenAI (primary) → Claude (fallback) → Azure (enterprise) → Self-hosted (d
 | Latency | <100ms | 500-2000ms | ✅ Edge |
 | Offline operation | Works without internet | Fails if no connection | ✅ Edge |
 | Privacy | Location stays on device | Sends GPS to cloud | ✅ Edge |
-| Cost at scale | $100 one-time/vehicle | $0.001/check × 1M/day = $30K/mo | ✅ Edge |
+| Cost at scale | €95 one-time/vehicle | €0.001/check × 1M/day = €28.5K/mo | ✅ Edge |
 
 **Two Edge AI Features**:
 
@@ -217,12 +218,12 @@ OpenAI (primary) → Claude (fallback) → Azure (enterprise) → Self-hosted (d
 - Avoids false alarms (GPS drift, map errors)
 - Users don't feel "policed" - vehicle just naturally doesn't go that way
 
-**Hardware per Vehicle**: ~$100 (GPS $15, IMU $10, Raspberry Pi $35, 4G module $20)
+**Hardware per Vehicle**: ~€95 (GPS €14, IMU €9.50, Raspberry Pi €33, 4G module €19)
 
 **Business Impact**:
 - **90% reduction in city fines** (€216K/year savings)
 - **80% reduction in wrong-way incidents** (safety improvement)
-- **5-year ROI** on $1M hardware investment
+- **5-year ROI** on €950K hardware investment
 
 ---
 
@@ -230,14 +231,14 @@ OpenAI (primary) → Claude (fallback) → Azure (enterprise) → Self-hosted (d
 
 ### Scenario 1: OpenAI Raises Prices 5X
 
-**Current**: $0.01/image → **New**: $0.05/image (5x increase!)
+**Current**: €0.0095/image → **New**: €0.0475/image (5x increase!)
 
 **Our Response** (automatic, no downtime):
-1. LLM Abstraction Layer detects cost spike
-2. Switch to Claude 3.5 ($0.008/image) in 5 minutes
+1. LiteLLM Proxy detects cost spike
+2. Switch to Claude 3.5 (€0.0076/image) in 5 minutes
 3. Zero code changes (just config: `LLM_PROVIDER=anthropic`)
 4. Monitor accuracy for 24 hours, rollback if worse
-5. **Savings**: $36K/month → $29K/month (20% cost reduction)
+5. **Savings**: €34.2K/month → €27.4K/month (20% cost reduction)
 
 ### Scenario 2: OpenAI Service Outage
 
@@ -258,7 +259,7 @@ OpenAI (primary) → Claude (fallback) → Azure (enterprise) → Self-hosted (d
 2. **Week 2**: Deploy Azure OpenAI (enterprise SLA, data residency)
 3. **Worst case**: Self-host LLaVA (open-source multimodal LLM)
    - Deploy on AWS GPU instances (g5.xlarge)
-   - Cost: ~$864/month (cheaper than cloud APIs at scale!)
+   - Cost: ~€820/month (cheaper than cloud APIs at scale!)
    - Trade-off: Higher latency, but full control
 
 ### Scenario 4: Model Drift (Accuracy Degrades Over Time)
@@ -329,7 +330,7 @@ OpenAI (primary) → Claude (fallback) → Azure (enterprise) → Self-hosted (d
 
 ### Phase 1: Pilot (Months 1-2) - €50K Investment
 - **Scope**: 500 scooters in Berlin
-- **Deploy**: Weaviate Cloud + LLM Abstraction Layer
+- **Deploy**: Qdrant + LiteLLM Proxy
 - **Feature**: Docking verification only (simplest use case)
 - **Success Metrics**:
   - 80% auto-approval rate
@@ -339,7 +340,7 @@ OpenAI (primary) → Claude (fallback) → Azure (enterprise) → Self-hosted (d
 ### Phase 2: Expand (Months 3-4) - €200K Investment
 - **Scope**: All vehicle types, all parking bays (5,000 vehicles)
 - **Add**: Damage detection, return photo verification
-- **Scale**: Weaviate to 3.6M photos/month
+- **Scale**: Qdrant to 3.6M photos/month
 - **Success Metrics**:
   - 90% auto-approval rate
   - <5% human review needed
@@ -387,7 +388,7 @@ OpenAI (primary) → Claude (fallback) → Azure (enterprise) → Self-hosted (d
 
 ### Investment Required
 - **Year 1 Total**: €1.25M (hardware + API costs)
-- **Ongoing**: €280K/year (LLM API costs + Weaviate)
+- **Ongoing**: €280K/year (LLM API costs + Qdrant)
 
 ### Net ROI
 - **Year 1**: €5.46M savings + €0.7M revenue - €1.25M investment = **€4.91M net gain**
